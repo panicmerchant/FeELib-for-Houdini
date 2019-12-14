@@ -1,0 +1,245 @@
+
+#ifndef __MEASURE_VFL__
+#define __MEASURE_VFL__
+
+#include <measure.vfl>
+
+
+
+
+
+
+
+
+#include <constant.vfl>
+#include <mathdeep.vfl>
+#include <measuredeep.vfl>
+#include <normal.vfl>
+#include <vector.vfl>
+
+
+
+
+
+function
+float planepointdistance(
+    vector plP, plN;
+    vector ptP;
+    ) {
+    return planepointdistance(plP, plN, ptP, {0,0,0});
+}
+
+function
+float planepointdistance(
+    int geo, primnum;
+    vector ptP;
+    ) {
+    vector
+    plP = prim(geo, "P", primnum),
+    //plP = primP_avg(geo, primnum),
+    plN = primN_last(geo, primnum);
+    
+    return planepointdistance(plP, plN, ptP);
+}
+
+function
+float planepointdistance(
+    int geo, primnum;
+    vector ptP;
+    export vector intersect_pos;
+    ) {
+    vector
+    plP = prim(geo, "P", primnum),
+    //plP = primP_avg(geo, primnum),
+    plN = primN_last(geo, primnum);
+
+    return planepointdistance(plP, plN, ptP, intersect_pos);
+}
+
+function
+float planepointdirecteddistance(
+    int geo, primnum;
+    vector ptP;
+    ) {
+    vector
+    plP = prim(geo, "P", primnum),
+    //plP = primP_avg(geo, primnum),
+    plN = primN_last(geo, primnum);
+    
+    return planepointdistance(plP, plN, ptP) * isvertical(-plN, ptP - plP);
+}
+
+function
+float planepointdirecteddistance(
+    int geo, primnum;
+    vector ptP;
+    export vector intersect_pos;
+    ) {
+    vector
+    plP = prim(geo, "P", primnum),
+    //plP = primP_avg(geo, primnum),
+    plN = primN_last(geo, primnum);
+    
+    return planepointdistance(plP, plN, ptP, intersect_pos) * isvertical(-plN, ptP - plP);
+}
+
+
+
+function
+float planepointdirecteddistance(
+    vector plP, plN;
+    vector ptP;
+    ) {
+    return planepointdistance(plP, plN, ptP) * isvertical(-plN, ptP - plP);
+}
+
+function
+float planepointdirecteddistance(
+    vector plP, plN;
+    vector ptP;
+    export vector intersect_pos;
+    ) {
+    return planepointdistance(plP, plN, ptP, intersect_pos) * isvertical(-plN, ptP - plP);
+}
+
+
+
+
+
+
+function
+vector planepointfoot(
+    vector ptP;
+    vector ptP;
+    ) {
+    return planelineintersect(ptP, lP0 - lP1, lP0, lP1);
+}
+
+
+function
+vector linepointfoot(
+    vector lP0, lP1;
+    vector ptP;
+    ) {
+    return planelineintersect(ptP, lP0 - lP1, lP0, lP1);
+}
+
+
+
+
+
+
+
+function
+float linedistance(
+    vector pos1, pos2, pos3, pos4;
+    ) {
+    vector
+    dir1 = pos2 - pos1,
+    dir2 = pos4 - pos3,
+    vertical = cross(dir1, dir2);
+    return planepointdistance(pos1, vertical, pos3);
+}
+
+
+
+
+
+
+
+
+function
+float xyzdistN(
+    int geo;
+    string primgroup;
+    vector ptP;
+    export int primnum;
+    export vector uvw;
+    float maxdist;
+    ) {
+    float dis = xyzdist(geo, primgroup, ptP, primnum, uvw, maxdist);
+    vector pos = prim(geo, "P", primnum);
+    vector plN = primN_last(geo, primnum);
+    return dis * isvertical(plN, ptP - pos);
+}
+
+function
+float xyzdistN(
+    int geo;
+    vector ptP;
+    export int primnum;
+    export vector uvw;
+    float maxdist;
+    ) {
+    float dis = xyzdist(geo, ptP, primnum, uvw, maxdist);
+    vector pos = prim(geo, "P", primnum);
+    vector plN = primN_last(geo, primnum);
+    return dis * isvertical(plN, ptP - pos);
+}
+
+function
+float xyzdistN(
+    int geo;
+    string primgroup;
+    vector ptP;
+    export int primnum;
+    export vector uvw;
+    ) {
+    float dis = xyzdist(geo, primgroup, ptP, primnum, uvw);
+    vector pos = prim(geo, "P", primnum);
+    vector plN = primN_last(geo, primnum);
+    return dis * isvertical(plN, ptP - pos);
+}
+
+function
+float xyzdistN(
+    int geo;
+    vector ptP;
+    export int primnum;
+    export vector uvw;
+    ) {
+    float dis = xyzdist(geo, ptP, primnum, uvw);
+    vector pos = prim(geo, "P", primnum);
+    vector plN = primN_last(geo, primnum);
+    return dis * isvertical(plN, ptP - pos);
+}
+
+function
+float xyzdistN(
+    int geo;
+    string primgroup;
+    vector ptP;
+    ) {
+    int primnum;
+    float dis = xyzdist(geo, primgroup, ptP, primnum, {0,0,0});
+    vector pos = prim(geo, "P", primnum);
+    vector plN = primN_last(geo, primnum);
+    return dis * isvertical(plN, ptP - pos);
+}
+
+function
+float xyzdistN(
+    int geo;
+    vector ptP;
+    ) {
+    int primnum;
+    float dis = xyzdist(geo, ptP, primnum, {0,0,0});
+    vector pos = prim(geo, "P", primnum);
+    vector plN = primN_last(geo, primnum);
+    return dis * isvertical(plN, ptP - pos);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endif

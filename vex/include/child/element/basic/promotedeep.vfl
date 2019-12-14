@@ -1,0 +1,358 @@
+
+#ifndef __PROMOTEDEEP_VFL__
+#define __PROMOTEDEEP_VFL__
+
+#include <promotedeep.vfl>
+
+
+
+
+function
+int pointprimindex(
+    const int geo;
+    const int primnum;
+    const int ptnum;
+    ) {
+    int primpoints[] = primpoints(geo, primnum);
+    int index = find(primpoints, ptnum);
+    if (index < 0) {
+        return -1;
+    } else {
+        return index;
+    }
+}
+
+
+//point to prim
+
+function
+int pointprim(
+    const int geo;
+    const int ptnum;
+    ) {
+    return getcomp(pointprims(geo, ptnum), 0);
+    //return pointprims(geo, ptnum)[0];
+}
+
+
+
+function
+int[] pointprims(
+    const int geo;
+    const int ptnum0, ptnum1;
+    ) {
+    int result[];
+    int pointprims0[] = pointprims(geo, ptnum0);
+    int pointprims1[] = pointprims(geo, ptnum1);
+    foreach (int pointprim; pointprims0) {
+        if ( removevalue(pointprims1, pointprim) ) {
+            push(result, pointprim);
+        }
+    }
+    return result;
+}
+
+function
+int[] pointprims(
+    const int geo;
+    const int ptnum0, ptnum1;
+    const int pointprims[];
+    ) {
+    int result[];
+    int pointprims0[] = pointprims;
+    int pointprims1[] = pointprims(geo, ptnum1);
+    foreach (int pointprim; pointprims0) {
+        if ( removevalue(pointprims1, pointprim) ) {
+            push(result, pointprim);
+        }
+    }
+    return result;
+}
+
+function
+int pointprim(
+    const int geo;
+    const int ptnum0, ptnum1;
+    ) {
+    int pointprims[] = pointprims(geo, ptnum0);
+    int pointprims1[] = pointprims(geo, ptnum1);
+    foreach (int pointprim; pointprims) {
+        if ( find(pointprims1, pointprim) > -1 ) {
+            return pointprim;
+        }
+    }
+    return -1;
+}
+
+function
+int pointprim(
+    const int geo;
+    const int ptnum0, ptnum1;
+    const int pointprims[];
+    ) {
+    int pointprims1[] = pointprims(geo, ptnum1);
+    foreach (int pointprim; pointprims) {
+        if ( find(pointprims1, pointprim) > -1 ) {
+            return pointprim;
+        }
+    }
+    return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//vertex to point
+
+function
+int vertexpoint(
+    int geo;
+    int primnum;
+    int vtxpnum;
+    ) {
+    return vertexpoint(geo, vertexindex(geo, primnum, vtxpnum));
+}
+
+
+
+
+
+
+
+
+
+
+
+//vertex to hedge
+
+function
+int vertexhedge(
+    int geo;
+    int primnum;
+    int vtxpnum;
+    ) {
+    return vertexhedge(geo, vertexindex(geo, primnum, vtxpnum));
+}
+
+
+
+
+
+
+
+
+
+
+
+//prim to hedge
+
+function
+int[] primhedges(
+    const int geo;
+    const int primnum;
+    ) {
+    int hfirst = primhedge(geo, primnum), hnext = hfirst, hnums[];
+    do{
+        push(hnums, hnext);
+        hnext = hedge_next(geo, hnext);
+    } while(hnext != hfirst);
+    return hnums;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//point to hedge
+
+function
+int[] pointhedges(
+    const int geo;
+    const int ptnum0;
+    const int ptnum1;
+    ) {
+    int hfirst = pointhedge(geo, ptnum0, ptnum1), hnext = hfirst, hnums[];
+    do{
+        push(hnums, hnext);
+        hnext = hedge_nextequiv(geo, hnext);
+    } while(hnext != hfirst);
+    return hnums;
+}
+
+function
+int[] pointsrchedges(
+    const int geo;
+    const int ptnum;
+    ) {
+    int hnums[], hfirst = pointhedge(geo, ptnum), hnext = hfirst;
+    do{
+        push(hnums, hnext);
+        hnext = pointhedgenext(geo, hfirst);
+    } while ( hnext != hfirst );
+    return hnums;
+    /*
+    //这个方法对于3点面结果是正确的，但是对于线的末尾点（无论是polyline还是poly）结果都是错误的
+    return pointvertices(geo, ptnum);
+    */
+
+    /*
+    // because linear vtxnum == hnum
+    int hnums[], vertices[] = pointvertices(geo, ptnum);
+    foreach (int vertex; vertices)
+        push(hnums, vertexhedge(geo, vertex));
+    return hnums;
+    */
+}
+
+function
+int[] pointdsthedges(
+    const int geo;
+    const int ptnum;
+    ) {
+    //algorithm is not good
+    int hnums[], nebs[] = neighbours(geo, ptnum);
+    foreach (int neb; nebs) {
+        push(hnums, pointhedges(geo, neb, ptnum));
+    }
+    return hnums;
+}
+
+function
+int[] pointhedges(
+    const int geo;
+    const int ptnum;
+    ) {
+    //algorithm is not good
+    return array(pointsrchedges(geo, ptnum), pointdsthedges(geo, ptnum));
+}
+
+function
+int pointhedgescount(
+    const int geo;
+    const int ptnum;
+    ) {
+    // Count number of half-edges incident to ptnum.
+    int edge_count = 0;
+    int hout = pointhedge(geo, ptnum);
+    while ( hout != -1 ) {
+        if (hedge_isprimary(geo, hout))
+            edge_count++;
+        hout = pointhedgenext(geo, hout);
+    };
+    return edge_count;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//point to edge
+
+function
+int pointedgescount(
+    const int geo;
+    const int ptnum;
+    ) {
+    // Count number of *edges* (not half-edges) incident to ptnum.
+    int edge_count = 0;
+    int hout = pointhedge(geo, ptnum);
+    while ( hout != -1 ) {
+        if (hedge_isprimary(geo, hout))
+            edge_count++;
+        int hin = hedge_prev(geo, hout);
+        if (hedge_isprimary(geo, hin))
+            edge_count++;
+        hout = pointhedgenext(geo, hout);
+    };
+    return edge_count;
+}
+
+function
+int[] pointedges(
+    const int geo;
+    const int ptnum0;
+    const int ptnum1;
+    ) {
+    return array(pointhedges(geo, ptnum0, ptnum1), pointhedges(geo, ptnum1, ptnum0));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//hedge to prim
+
+function
+int[] hedge_prim(
+    const int geo;
+    const int hnums[];
+    ) {
+    int result[];
+    foreach (int hnum; hnums) {
+        push(result, hedge_prim(geo, hnum));
+    }
+    return result;
+}
+
+
+
+
+
+
+
+
+
+
+
+//hedge to point
+
+
+
+//hedge to vertex
+
+
+
+
+
+
+
+#endif

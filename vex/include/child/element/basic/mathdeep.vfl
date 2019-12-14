@@ -1,0 +1,673 @@
+
+#ifndef __MATHDEEP_VFL__
+#define __MATHDEEP_VFL__
+
+#include <precompile.vfl>
+
+#include <mathdeep.vfl>
+
+
+#define FUNCbias(type)\
+        function\
+        type bias(\
+            type base, bias;\
+            ) {\
+            if (base <= 0) return 0;\
+            else if (base >= 1) return 1;\
+            else return bias / (((1.0 / base) - 2) * (1 - bias) + 1);\
+        }\
+
+DEFINEFUNCf(FUNCbias)
+
+#define FUNCgain(type)\
+        function\
+        type gain(\
+            type base, bias;\
+            ) {\
+            if (base < 0.5) return bias(2*base, gain) * 0.5;\
+            else return 1 - bias(2*(1-base), gain) * 0.5;\
+        }\
+
+DEFINEFUNCf(FUNCgain)
+
+#define FUNCargsize0(type)\
+        function\
+        int argsize(\
+            type value;\
+            ) {\
+            return 1;\
+        }\
+
+DEFINEFUNCifs(FUNCargsize0)
+
+#define FUNCargsize1(type)\
+        function\
+        int argsize(\
+            type value[];\
+            ) {\
+            return 1;\
+        }\
+
+DEFINEFUNCifs(FUNCargsize1)
+
+function
+int argsize(
+    vector2 value;
+    ) {
+    return 2;
+}
+
+function
+int argsize(
+    vector2 value[];
+    ) {
+    return 2;
+}
+
+function
+int argsize(
+    vector value;
+    ) {
+    return 3;
+}
+
+function
+int argsize(
+    vector value[];
+    ) {
+    return 3;
+}
+
+function
+int argsize(
+    vector4 value;
+    ) {
+    return 4;
+}
+
+function
+int argsize(
+    vector4 value[];
+    ) {
+    return 4;
+}
+
+function
+int argsize(
+    matrix value;
+    ) {
+    return 16;
+}
+
+function
+int argsize(
+    matrix value[];
+    ) {
+    return 16;
+}
+
+function
+int argsize(
+    matrix3 value;
+    ) {
+    return 9;
+}
+
+function
+int argsize(
+    matrix3 value[];
+    ) {
+    return 9;
+}
+
+function
+int argsize(
+    matrix2 value;
+    ) {
+    return 4;
+}
+
+function
+int argsize(
+    matrix2 value[];
+    ) {
+    return 4;
+}
+
+
+
+
+
+
+function
+int unit(
+    int value;
+    ) {
+    return 1;
+}
+
+#define FUNCunit(type)\
+        function\
+        type unit(\
+            type value;\
+            ) {\
+            return set(1.0);\
+        }\
+
+DEFINEFUNCfv(FUNCunit)
+
+
+
+
+
+
+
+
+#define FUNCsquare(type)\
+        function\
+        type square(\
+            type value;\
+            ) {\
+            return value * value;\
+        }\
+
+DEFINEFUNCifv(FUNCsquare)
+
+#define FUNCcubic(type)\
+        function\
+        type cubic(\
+            type value;\
+            ) {\
+            return value * value * value;\
+        }\
+
+DEFINEFUNCifv(FUNCcubic)
+
+#define FUNCcomplement(type)\
+        function\
+        type complement(\
+            type value;\
+            ) {\
+            return 1 - value;\
+        }\
+
+DEFINEFUNCfv(FUNCcomplement)
+
+
+
+#define FUNClog(type)\
+        function\
+        type log(\
+            type value0;\
+            type value1;\
+            ) {\
+            if(1)\
+                return log10(value1) / log10(value0);\
+            else\
+                return log(value1) / log(value0);\
+        }\
+
+DEFINEFUNCfv(FUNClog)
+
+#define FUNCln(type)\
+        function\
+        type ln(\
+            type value;\
+            ) {\
+            return log(value);\
+        }\
+
+DEFINEFUNCfv(FUNCln)
+
+
+
+
+#define FUNCdcosh(type)\
+        function\
+        type dcosh(\
+            type x;\
+            ) {\
+            return sinh(x);\
+        }\
+
+DEFINEFUNCfv(FUNCdcosh)
+
+#define FUNCdsinh(type)\
+        function\
+        type dsinh(\
+            type x;\
+            ) {\
+            return cosh(x);\
+        }\
+
+DEFINEFUNCfv(FUNCdsinh)
+
+#define FUNCdtanh(type)\
+        function\
+        type dtanh(\
+            type x;\
+            ) {\
+            return 1-square(tanh(x));\
+        }\
+
+DEFINEFUNCfv(FUNCdtanh)
+
+#define FUNCarcosh(type)\
+        function\
+        type arcosh(\
+            type x;\
+            ) {\
+            return log(x+sqrt(square(x)+1));\
+        }\
+
+DEFINEFUNCfv(FUNCarcosh)
+
+#define FUNCarsinh(type)\
+        function\
+        type arsinh(\
+            type x;\
+            ) {\
+            return log(x+sqrt(square(x)-1));\
+        }\
+
+DEFINEFUNCfv(FUNCarsinh)
+
+#define FUNCartanh(type)\
+        function\
+        type artanh(\
+            type x;\
+            ) {\
+            return log((1+x)/(1-x))/2;\
+        }\
+
+DEFINEFUNCfv(FUNCartanh)
+
+#define FUNCdarcosh(type)\
+        function\
+        type darcosh(\
+            type x;\
+            ) {\
+            return 1/sqrt(square(x)+1);\
+        }\
+
+DEFINEFUNCfv(FUNCdarcosh)
+
+#define FUNCdarsinh(type)\
+        function\
+        type darsinh(\
+            type x;\
+            ) {\
+            return 1/sqrt(square(x)-1);\
+        }\
+
+DEFINEFUNCfv(FUNCdarsinh)
+
+#define FUNCdartanh(type)\
+        function\
+        type dartanh(\
+            type x;\
+            ) {\
+            return 1/(1-square(x));\
+        }\
+
+DEFINEFUNCfv(FUNCdartanh)
+
+
+
+
+function
+float sincos(
+    float value;
+    ) {
+    return (value < 0) * sqrt(1 - square(value));
+}
+
+
+
+function
+float decfloor(float num;) {
+	return num - floor(num);
+}
+
+function
+vector2 decfloor(vector2 num;) {
+	return set(decfloor(num.x), decfloor(num.y));
+}
+
+function
+vector decfloor(vector num;) {
+	return set(decfloor(num.x), decfloor(num.y), decfloor(num.z));
+}
+
+function
+vector4 decfloor(vector4 num;) {
+	return set(decfloor(num.x), decfloor(num.y), decfloor(num.z), decfloor(num.w));
+}
+
+
+
+function
+float dectrunc(float num;){
+	return num - trunc(num);
+}
+
+function
+vector2 dectrunc(vector2 num;){
+	return set(dectrunc(num.x), dectrunc(num.y));
+}
+
+function
+vector dectrunc(vector num;){
+	return set(dectrunc(num.x), dectrunc(num.y), dectrunc(num.z));
+}
+
+function
+vector4 dectrunc(vector4 num;){
+	return set(dectrunc(num.x), dectrunc(num.y), dectrunc(num.z), dectrunc(num.w));
+}
+
+
+function
+vector pow(float b; vector e) {
+   return set(pow(b,e.x), pow(b,e.y), pow(b,e.z));
+}
+
+function
+vector pow(vector b,e;) {
+   return set(pow(b.x,e.x), pow(b.y,e.y), pow(b.z,e.z));
+}
+
+function
+vector4 pow(float b; vector4 e;) {
+   return set(pow(b,e.x), pow(b,e.y), pow(b,e.z), pow(b,e.w));
+}
+
+function
+vector4 pow(vector4 b,e;) {
+   return set(pow(b.x,e.x), pow(b.y,e.y), pow(b.z,e.z), pow(b.w,e.w));
+}
+
+#define FUNCpow(type)\
+        function\
+        type pow(\
+            const type num;\
+            const int exp;\
+            ) {\
+            if (exp == 0) {\
+                return 1;\
+            } else if (exp == 1) {\
+                return num;\
+            } else if (exp == 2) {\
+                return square(num);\
+            } else if (exp == 3) {\
+                return cubic(num);\
+            } else {\
+                /*type result = num;\
+                for (int i = 1; i < exp; ++i) {\
+                    result *= num;\
+                }\
+                return result;*/\
+                return pow(num, float(exp));\
+            }\
+        }\
+
+DEFINEFUNCifv(FUNCpow)
+
+
+
+function
+int factorial(int n;) {
+    if(n < 0) {
+        error("bad arg value");
+    }
+    int result = n;
+    for(int i = n-1; i > 1; --i) {
+        result *= i;
+    }
+	return max(result, 1);
+}
+
+function
+int combination(int n,m;) {
+    if(n > m || n < 0) {
+        error("bad arg value");
+    }
+    if(n == 0) {
+	    return 0;
+    }
+    int msn = m - n;
+    if(n > msn) {
+        n = msn;
+    }
+    int result = 1;
+    for(int i = 1; i <= n; ++i) {
+        result = result * (msn+i) / i; //先算乘法，因为(m-n+i)/i除不尽 //result *= (m-n+i) / i;
+    }
+	return result;
+}
+
+function
+int permutations(
+    int n,m;
+    ) {
+    if(n > m || n < 0) {
+        error("bad arg value");
+    }
+    if(n == 0) {
+	    return 0;
+    }
+    int msn = m - n;
+    int result = msn + 1;
+    for(int i = msn + 2; i <= m; ++i) {
+        result *= i;
+    }
+	return result;
+}
+
+
+
+
+#define FUNCceil(type)\
+        function\
+        type ceil(\
+            type value;\
+            int places;\
+            ) {\
+            places = pow(10, places);\
+            return ceil(value * places) / places;\
+        }\
+
+DEFINEFUNCfv(FUNCceil)
+
+#define FUNCfloor(type)\
+        function\
+        type floor(\
+            type value;\
+            int places;\
+            ) {\
+            places = pow(10, places);\
+            return floor(value * places) / places;\
+        }\
+
+DEFINEFUNCfv(FUNCfloor)
+
+#define FUNCrint(type)\
+        function\
+        type rint(\
+            type value;\
+            int places;\
+            ) {\
+            places = pow(10, places);\
+            return rint(value * places) / places;\
+        }\
+
+DEFINEFUNCfv(FUNCrint)
+
+#define FUNCround(type)\
+        function\
+        type round(\
+            type value;\
+            int places;\
+            ) {\
+            return rint(value, places);\
+        }\
+
+DEFINEFUNCfv(FUNCround)
+
+
+function
+float fit(
+    float value, omin, omax, nmin, nmax;
+    int clampin, clampout;
+    ) {
+    float result = value;
+    if (!clampin && result < omin) {
+        result += nmin - omin;
+    } else if (!clampout && result > omax) {
+        result += nmax - omax;
+    } else {
+        result = fit(result, omin, omax, nmin, nmax);
+    }
+    return result;
+}
+
+#define FUNCfit0(type)\
+        function\
+        type fit(\
+            type value, omin, omax, nmin, nmax;\
+            int clampin, clampout;\
+            ) {\
+            type result = value;\
+            for (int i = 0; i < argsize(value); ++i){\
+                if (!clampin && result[i] < omin[i]) {\
+                    result[i] += nmin[i] - omin[i];\
+                } else if (!clampout && result[i] > omax[i]) {\
+                    result[i] += nmax[i] - omax[i];\
+                } else {\
+                    result[i] = fit(result[i], omin[i], omax[i], nmin[i], nmax[i]);\
+                }\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCv(FUNCfit0)
+
+#define FUNCfit1(type)\
+        function\
+        type fit(\
+            type value, omin, omax;\
+            float nmin, nmax;\
+            int clampin, clampout;\
+            ) {\
+            type result = value;\
+            for (int i = 0; i < argsize(value); ++i){\
+                if (!clampin && result[i] < omin[i]) {\
+                    result[i] += nmin - omin[i];\
+                } else if (!clampout && result[i] > omax[i]) {\
+                    result[i] += nmax - omax[i];\
+                } else {\
+                    result[i] = fit(result[i], omin[i], omax[i], nmin, nmax);\
+                }\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCv(FUNCfit1)
+
+
+
+
+
+#define FUNCefit010(type)\
+        function\
+        type efit01(\
+            type value;\
+            type nmin, nmax;\
+            ) {\
+            return efit(value, 0, 1, nmin, nmax);\
+        }\
+
+DEFINEFUNCfv(FUNCefit010)
+
+#define FUNCefit011(type)\
+        function\
+        type efit01(\
+            type value;\
+            float nmin, nmax;\
+            ) {\
+            return efit(value, 0, 1, nmin, nmax);\
+        }\
+
+DEFINEFUNCv(FUNCefit011)
+
+
+
+
+#define FUNCchramp0(type)\
+        function\
+        type chramp(\
+            string channal;\
+            type value;\
+            ) {\
+            type result;\
+            for (int i = 0; i < argsize(value); ++i){\
+                result[i] = chramp(channal, value[i]);\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCv(FUNCchramp0)
+
+#define FUNCchramp1(type)\
+        function\
+        type chramp(\
+            string channal;\
+            type value;\
+            float time;\
+            ) {\
+            type result;\
+            for (int i = 0; i < argsize(value); ++i){\
+                result[i] = chramp(channal, value[i], time);\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCv(FUNCchramp1)
+
+
+#define FUNCdec2bin(type)\
+        function\
+        int[] dec2bin(\
+            type dec;\
+            ) {\
+            int result[];\
+            while (dec) {\
+                push(result, dec % 2);\
+                dec /= 2;\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCi(FUNCdec2bin)
+
+
+
+
+#define FUNCweight(type)\
+        function\
+        type weight(\
+            type value;\
+            type min;\
+            type max;\
+            ) {\
+            return (value - max) / (min - max);\
+        }\
+
+DEFINEFUNCfv(FUNCweight)
+
+
+
+
+
+
+#endif

@@ -1,0 +1,75 @@
+
+#ifndef __ARRAYBASIC_VFL__
+#define __ARRAYBASIC_VFL__
+
+#include <precompile.vfl>
+
+#include <arraybasic.vfl>
+
+
+
+
+
+#include <vectordeep.vfl>
+
+
+
+
+
+
+#define FUNCmaxidx2(type)\
+        function\
+        int[] maxidx(\
+            const type arr[];\
+            float threshold;\
+            ) {\
+            int result[];\
+            type max = max(arr);\
+            foreach (int idx; type item; arr){\
+                if (length(item - max) < threshold) {\
+                    push(result, idx);\
+                }\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCifv(FUNCmaxidx2)
+
+
+#define FUNCminidx2(type)\
+        function\
+        int[] minidx(\
+            const type arr[];\
+            float threshold;\
+            ) {\
+            int result[];\
+            type min = min(arr);\
+            foreach (int idx; type item; arr){\
+                if (length(item - min) < threshold) {\
+                    push(result, idx);\
+                }\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCifv(FUNCminidx2)
+
+
+
+
+
+
+
+
+
+
+
+
+#endif
+
+
+
+
+
+
+

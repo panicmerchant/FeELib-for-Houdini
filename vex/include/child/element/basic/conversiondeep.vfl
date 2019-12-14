@@ -1,0 +1,74 @@
+
+#ifndef __CONVERSIONDEEP_VFL__
+#define __CONVERSIONDEEP_VFL__
+
+#include <precompile.vfl>
+
+#include <conversiondeep.vfl>
+
+
+
+
+
+
+function
+int[] atoi(
+    string strarr[];
+    ) {
+	int result[];
+	foreach (string str; strarr) {
+		push(result, atoi(str));
+	}
+    return result;
+}
+
+function
+int[] splitatoi(
+    string str;
+    ) {
+    return atoi(split(str));
+}
+
+function
+string[] itoa(
+    int argarr[];
+    ) {
+	string result[];
+	foreach (int arg; argarr) {
+		push(result, itoa(arg));
+	}
+    return result;
+}
+
+function
+string itoa(
+    int argarr[];
+    string whitespace;
+    ) {
+    return join(itoa(argarr), whitespace);
+    /*
+    string result = '';
+	foreach (int arg; argarr) {
+		concat(result, itoa(arg), whitespace);
+	}
+    rstrip(result, whitespace);
+    return result;
+    */
+}
+
+function
+string itoa(
+    int argarr[];
+    ) {
+    return itoa(argarr), ' ';
+    
+}
+
+
+
+
+
+
+
+
+#endif

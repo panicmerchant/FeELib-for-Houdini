@@ -1,0 +1,103 @@
+
+#ifndef __MATRIX_VFL__
+#define __MATRIX_VFL__
+
+#include <matrix.vfl>
+
+
+
+/*
+matrix index test
+#include <constant.vfl>
+f[]@naturalnum = naturalnum(16);
+4[]@mtx = unserialize(@naturalnum);
+f@a = @mtx[0].yx;
+*/
+
+
+
+
+function
+matrix2 rotate(
+    const matrix2 mtx;
+    const float amount;
+    ) {
+    matrix2 result = mtx;
+    rotate(result, amount);
+    return result;
+}
+
+function
+matrix3 rotate(
+    const matrix3 mtx;
+    const float amount;
+    const vector axis;
+    ) {
+    matrix3 result = mtx;
+    rotate(result, amount, axis);
+    return result;
+}
+
+function
+matrix rotate(
+    const matrix mtx;
+    const float amount;
+    const vector axis;
+    ) {
+    matrix result = mtx;
+    rotate(result, amount, axis);
+    return result;
+}
+
+function
+void rotate(
+    export matrix3 mtx;
+    const vector angelaxis;
+    ) {
+    rotate(mtx, length(angelaxis), normalize(angelaxis));
+}
+
+function
+void rotate(
+    export matrix mtx;
+    const vector angelaxis;
+    ) {
+    rotate(mtx, length(angelaxis), normalize(angelaxis));
+}
+
+function
+matrix3 rotate(
+    const matrix3 mtx;
+    const vector angelaxis;
+    ) {
+    matrix3 result = mtx;
+    rotate(result, angelaxis);
+    return result;
+}
+
+function
+matrix rotate(
+    const matrix mtx;
+    const vector angelaxis;
+    ) {
+    matrix result = mtx;
+    rotate(result, angelaxis);
+    return result;
+}
+
+
+
+function
+matrix3 slerp(
+    const matrix3 mtx1;
+    const matrix3 mtx2;
+    const float bias;
+    ) {
+    return matrix3(slerp(quaternion(mtx1), quaternion(mtx2), bias));
+}
+
+
+
+#endif
+
+

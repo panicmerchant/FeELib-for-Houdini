@@ -1,0 +1,251 @@
+
+#ifndef __CONSTANT_VFL__
+#define __CONSTANT_VFL__
+
+#include <precompile.vfl>
+
+#include <constant.vfl>
+
+
+/*
+these has been defined in <math.h>
+#define PI               3.14159265358979323846  // pi 
+#define 2PI              6.28318530717958647692  // pi*2
+#define PI_2             1.57079632679489661923  // pi/2
+#define 4PI              12.5663706143591729539  // pi*4
+#define PI_4             0.78539816339744830962  // pi/4
+#define SQRT2            1.41421356237309504880  // sqrt(2) 
+#define 1_SQRT2          0.70710678118654752440  // 1/sqrt(2)
+#define SQRT3            1.73205080756887729353  // sqrt(3)
+#define 1_SQRT3          0.57735026918962576451  // 1/sqrt(3)
+#define SQRTPI           1.7724538509055160273   // sqrt(PI)
+#define SQRT2PI          2.50662827463100050242  // sqrt(2*PI)
+#define SQRTPI_2         1.25331413731550025121  // sqrt(PI/2)
+#define 1_3              0.3333333333333333333   // 1/3
+#define LOG2             0.69314718055994530942  // log(2)
+#define E                2.71828182845904523536  // e
+#define E2               5.43656365691809047072  // 2*e
+*/
+#define 2PI              6.28318530717958647692  // pi*2
+#define 4PI              12.5663706143591729539  // pi*4
+#define 2E               5.43656365691809047072  // 2*e
+
+#ifndef THRESHOLDp5
+#define THRESHOLDp5 1e-05
+#endif
+
+#ifndef THRESHOLDn5
+#define THRESHOLDn5 -1e-05
+#endif
+
+#ifndef THRESHOLDp6
+#define THRESHOLDp6 1e-06
+#endif
+
+#ifndef THRESHOLDn6
+#define THRESHOLDn6 -1e-06
+#endif
+
+
+
+
+
+
+#ifndef MININTS16
+#define MININTS16 -32768
+#endif
+
+#ifndef MAXINTS16
+#define MAXINTS16 32767
+#endif
+
+#ifndef MAXINTUNS16
+#define MAXINTUNS16 65535
+#endif
+
+#ifndef MININTS32
+#define MININTS32 -2147483648
+#endif
+
+#ifndef MAXINTS32
+#define MAXINTS32 2147483647
+#endif
+
+#ifndef MAXINTUNS32
+#define MAXINTUNS32 4294967295
+#endif
+
+
+
+
+#ifndef MINFS32
+#define MINFS32 -3.4028235677973364274807346397956171e38
+#endif
+
+#ifndef MAXFS32
+#define MAXFS32 3.4028235677973364274807346397956171e38
+#endif
+
+
+
+#ifndef MAXFUNS32
+#define MAXFUNS32 MAXFS32
+#endif
+
+
+#ifndef MINFS64
+#define MINFS64 -3.4028235677973364274807346397956171e38
+#endif
+
+#ifndef MAXFS64
+#define MAXFS64 3.4028235677973364274807346397956171e38
+#endif
+
+#ifndef MAXFUNS64
+#define MAXFUNS64 MAXFS64
+#endif
+
+
+
+#define FUNClineararray(type)\
+        function\
+        type[] lineararray(\
+            type start, end, increment;\
+            ) {\
+            type arr[];\
+            if (increment > 0) {\
+                for (type i = start; i < end; i += increment) {\
+                    push(arr, i);\
+                }\
+            } else if (increment < 0) {\
+                for (type i = start; i > end; i += increment) {\
+                    push(arr, i);\
+                }\
+            } else {\
+                error("death cycle");\
+            }\
+            return arr;\
+        }\
+
+/*
+int lineararrayi[] = lineararray(start, end, 1);
+*/
+DEFINEFUNCif(FUNClineararray)
+
+
+#define FUNClineararray1(type)\
+        function\
+        type[] lineararray(\
+            type start, end;\
+            ) {\
+            return lineararray(start, end, 1);\
+        }\
+
+DEFINEFUNCif(FUNClineararray1)
+
+function
+vector[] lineararray(
+    vector start, end, increment;
+    ) {
+    float x[] = lineararray(start.x, end.x, increment.x),
+          y[] = lineararray(start.y, end.y, increment.y),
+          z[] = lineararray(start.z, end.z, increment.z);
+    vector result[];
+    int minlen = min(len(x), len(y), len(z));
+    for (int i = 0; i < minlen; ++i) {
+        push(result, vector(set(x[i], y[i], z[i])));
+    }
+    return result;
+}
+
+#define lineararrayi lineararray
+#define lineararrayf lineararray
+#define lineararrayv lineararray
+
+
+
+
+function
+int[] naturalnumber(
+    int end;
+    ) {
+    return lineararrayi(0, end, 1);
+}
+/*
+int naturalnumber[] = naturalnumber(end);
+*/
+
+#define naturalnum naturalnumber
+
+
+/*
+
+function
+int[] combinatorialnaturalnumber(
+    int end;
+    int n;
+    ) {
+    for
+    return lineararrayi(0, end, 1);
+}
+
+
+
+function
+int[] combination(
+    int end;
+    int arr[];
+    ) {
+    int lastitem = 1 + arr[len(arr)-1];
+    if (find(arr, lastitem) != -len(arr)-1) {
+        return combination(arr);
+    } else {
+    
+    }
+}
+*/
+
+
+
+function
+int numelem(
+    const int geo;
+    const string class;
+    ) {
+    if(class == 'point') return npoints(geo);
+    else if(class == 'points') return npoints(geo);
+    else if(class == 'vertex') return nvertices(geo);
+    else if(class == 'vertices') return nvertices(geo);
+    else if(class == 'prim') return nprimitives(geo);
+    else if(class == 'prims') return nprimitives(geo);
+    else if(class == 'primitive') return nprimitives(geo);
+    else if(class == 'primitives') return nprimitives(geo);
+    else return -1;
+}
+
+function
+int numelemgroup(
+    const int geo;
+    const string group;
+    const string class;
+    ) {
+    if(class == 'point') return npointsgroup(geo, group);
+    else if(class == 'points') return npointsgroup(geo, group);
+    else if(class == 'vertex') return nverticesgroup(geo, group);
+    else if(class == 'vertices') return nverticesgroup(geo, group);
+    else if(class == 'prim') return nprimitivesgroup(geo, group);
+    else if(class == 'prims') return nprimitivesgroup(geo, group);
+    else if(class == 'primitive') return nprimitivesgroup(geo, group);
+    else if(class == 'primitives') return nprimitivesgroup(geo, group);
+    else return -1;
+}
+
+
+
+
+
+
+
+
+
+#endif

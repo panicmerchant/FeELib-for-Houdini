@@ -1,0 +1,49 @@
+
+#ifndef __ROTATE_VFL__
+#define __ROTATE_VFL__
+
+#include <precompile.vfl>
+
+#include <rotate.vfl>
+
+
+
+
+
+
+
+
+#define FUNCqrotate(type)\
+        function\
+        type qrotate(\
+            vector4 q;\
+            type mtx;\
+            ) {\
+            return mtx * type(matrix3(qconvert(q)));\
+        }\
+
+DEFINEFUNCm3(FUNCqrotate)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endif
+
+
+
+
+
+
+
+
+

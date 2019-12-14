@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  houdini OPmenu
+  2018-11-10
+  junvfx@foxmail.com
+
+    This file defines the menu items when right-clicking over parameters in
+    Houdini.
+	    <separatorItem/>
+-->
+
+<menuDocument>
+
+    <menu>
+	    <scriptItem id="window_folder">
+  <insertBefore />
+	    	<label>Browse in window</label>
+	    	<scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+	    </scriptItem>
+
+    <subMenu id="Add_Expression"> <label>Add Expression</label>
+  <insertBefore />
+    <subMenu id="bbox"> <label>bbox</label>
+      	<scriptItem id="BBOX_MIN">
+        	<label>min</label>
+        	<scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+      	</scriptItem>
+      	<scriptItem id="BBOX_MAX">
+        	<label>max</label>
+        	<scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+        </scriptItem>
+      	<scriptItem id="BBOX_SIZE">
+        	<label>size</label>
+        	<scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+      	</scriptItem>
+    </subMenu>
+
+    <subMenu id="prim"> <label>prim</label>
+        <scriptItem id="prim1">
+          <label>prim</label>
+          <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+        </scriptItem>
+        <scriptItem id="primuv">
+          <label>primuv</label>
+          <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+        </scriptItem>
+    </subMenu>
+
+    <subMenu id="fit"> <label>fit</label>
+        <scriptItem id="fit1">
+          <label>fit</label>
+          <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+        </scriptItem>
+        <scriptItem id="fit01">
+          <label>fit01</label>
+          <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+        </scriptItem>
+    </subMenu>
+
+    <subMenu id="vorigin"> <label>vorigin</label>
+        <scriptItem id="vtorigin">
+          <label>vtorigin</label>
+          <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+        </scriptItem>
+        <scriptItem id="vrorigin">
+          <label>vrorigin</label>
+          <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+        </scriptItem>
+    </subMenu>
+
+    <subMenu id="CEX_Y_Z"> <label>CEX Y Z</label>
+      	<scriptItem id="CEX1">
+        	<label>+CEX Y Z</label>
+        	<scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+      	</scriptItem>
+      	<scriptItem id="CEX2">
+        	<label>-CEX Y Z</label>
+        	<scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+      	</scriptItem>
+    </subMenu>
+<separatorItem/>
+      <scriptItem id="point">
+        <label>point</label>
+        <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+      </scriptItem>
+
+      <scriptItem id="detail">
+        <label>detail</label>
+        <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+      </scriptItem>
+
+      <scriptItem id="centroid">
+        <label>centroid</label>
+        <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+      </scriptItem>
+
+      <scriptItem id="opdigits">
+        <label>opdigits</label>
+        <scriptPath>$MY_MENU_PATH/PARMmenu.py</scriptPath>
+      </scriptItem>
+
+  </subMenu>
+    </menu>
+</menuDocument>

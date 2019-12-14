@@ -1,0 +1,54 @@
+
+#ifndef __NEIGHBOURSDEEP_VFL__
+#define __NEIGHBOURSDEEP_VFL__
+
+#include <neighboursdeep.vfl>
+
+
+
+
+
+function
+int[] polylineneighbours(
+    int geo;
+    int primnum;
+    ) {
+    int nebs[], primpoints[] = primpoints(geo, primnum);
+    foreach (int primpoint; primpoints){
+        int pointprims[] = pointprims(geo, primpoint);
+        removevalue(pointprims, primnum);
+        push(nebs, pointprims);
+    }
+    return nebs;
+}
+
+
+function
+int[] polylineneighbours(
+    int geo;
+    string groupname;
+    int primnum;
+    ) {
+    int nebs[] = polylineneighbours(geo, primnum);
+    foreach (int neb; nebs){
+        if (inprimgroup(geo, groupname, neb)) {
+            
+        }
+    }
+    return nebs;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endif

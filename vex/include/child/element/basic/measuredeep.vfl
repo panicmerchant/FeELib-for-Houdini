@@ -1,0 +1,168 @@
+
+#ifndef __MEASUREDEEP_VFL__
+#define __MEASUREDEEP_VFL__
+
+#include <measuredeep.vfl>
+
+
+
+
+
+
+
+function
+float polylength(
+    int geo;
+    int primnum;
+    int ptnum;
+    ) {
+    float result = 0;
+    int primpoints[] = primpoints(geo, primnum);
+    int ptindex = find(primpoints, ptnum);
+    if (ptindex == 0) {
+        return result;
+    }
+    vector lastpos = point(geo, "P", primpoints[0]);
+    for (int i = 1; i < len(primpoints); ++i){
+        vector thispos = point(geo, "P", primpoints[i]);
+        result += distance(thispos, lastpos);
+        lastpos = thispos;
+        if (i == ptindex) {
+            return result;
+        }
+    }
+    return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function
+vector planelineintersect(
+    vector plP, plN;
+    vector lP0, lP1;
+    ) {
+    vector dir = lP1 - lP0;
+    float dot = dot(plN, dir);
+    
+    float p0 = plP.x, p1 = plP.y, p2 = plP.z;
+    float l0 = lP0.x, l1 = lP0.y, l2 = lP0.z;
+
+    float t = sum(set((p0-l0), (p1-l1), (p2-l2)) * plN) / dot;
+    return set(l0 + dir.x * t,
+               l1 + dir.y * t,
+               l2 + dir.z * t);
+}
+
+
+
+
+
+
+
+
+function
+float linepointdistance(
+    vector lP0, lP1;
+    vector pP;
+    ) {
+    vector dir = lP1 - lP0;
+    vector vec = pP - lP0;
+    if (1) {
+        return length(cross(dir, vec)) / length(dir);
+    } else {
+        return sqrt(square(length(vec)) - square(dot(vec, dir) / length(dir)));
+    }
+}
+
+/*
+
+//这段代码说明了ptlined和linepointdistance的区别
+
+#include <measure.vfl>
+
+vector pos = {0,-1,1};
+vector linepos0 = {0,0,0};
+vector linepos1 = {0,1,0};
+
+f@dis0 = ptlined(linepos0, linepos1, pos);
+f@dis1 = linepointdistance(linepos0, linepos1, pos);
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function
+float manhattan_distance(
+    vector pos0, pos1;
+    ) {
+    return sum(abs(pos0-pos1));
+}
+
+function
+float minkowski_distance(
+    vector pos0, pos1;
+    float p;
+    ) {
+    return pow(sum(abs(pow(pos0-pos1, p))), 1/p);
+}
+
+
+
+
+function
+vector[] sidedir(
+    int geo;
+    int primnum;
+    ) {
+    vector sidedir[];
+    int primpoints[] = primpoints(geo, primnum);
+    for (int i = 0; i < len(primpoints); ++i){
+        vector pos0 = point(geo, 'P', primpoints[i]);
+        vector pos1 = point(geo, 'P', primpoints[i+1]);
+        push(sidedir, pos1 - pos0);
+    }
+    return sidedir;
+}
+
+function
+float[] sidelength(
+    int geo;
+    int primnum;
+    ) {
+    float sidelength[];
+    vector sidedir[] = sidedir(geo, primnum);
+    foreach (vector dir; sidedir){
+        push(sidelength, length(dir));
+    }
+    return sidelength;
+}
+
+
+
+
+
+
+
+#endif

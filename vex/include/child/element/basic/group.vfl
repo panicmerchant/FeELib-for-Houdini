@@ -1,0 +1,509 @@
+
+#ifndef __GROUP_VFL__
+#define __GROUP_VFL__
+
+#include <group.vfl>
+
+
+
+function
+int setvertexgroup(
+	int geohandle;
+	string groupname;
+	int vtxnum;
+	int value;
+	string mode;
+	) {
+	return setvertexgroup(geohandle, groupname, -1, vtxnum, value, mode);
+}
+
+function
+int setvertexgroup(
+	int geohandle;
+	string groupname;
+	int vtxnum;
+	int value;
+	) {
+	return setvertexgroup(geohandle, groupname, -1, vtxnum, value);
+}
+
+
+
+
+function
+int[] inpointgroup(
+	int geo;
+	string groupname;
+	int ptnums[];
+	) {
+	int attrib[];
+	foreach (int index; int ptnum; ptnums)
+		attrib[index] = inpointgroup(geo, groupname, ptnum);
+	return attrib;
+}
+
+function
+int[] inprimgroup(
+	int geo;
+	string groupname;
+	int primnums[];
+	) {
+	int attrib[];
+	foreach (int index; int primnum; primnums)
+		attrib[index] = inprimgroup(geo, groupname, primnum);
+	return attrib;
+}
+
+
+
+
+
+
+
+
+
+
+function
+int inedgegroup(
+	int geohandle;
+	string groupname;
+	int hnum;
+	) {
+	return inedgegroup(geohandle, groupname, hedge_srcpoint(geohandle, hnum), hedge_dstpoint(geohandle, hnum));
+}
+
+
+
+
+function
+int setedgegroup(
+	int geohandle;
+	string groupname;
+	int ptnum0;
+	int ptnum1;
+	int value;
+	string mode;
+	) {
+	if(mode == "set") {
+		return setedgegroup(geohandle, groupname, ptnum0, ptnum1, value);
+	} else if(mode == "toggle" && value == 1) {
+		return setedgegroup(geohandle, groupname, ptnum0, ptnum1, !inedgegroup(geohandle, groupname, ptnum0, ptnum1));
+	} else {
+		return -1;
+	}
+}
+
+
+
+function
+int setedgegroup(
+	int geohandle;
+	string groupname;
+	int hnum;
+	int value;
+	) {
+	return setedgegroup(geohandle, groupname, hedge_srcpoint(geohandle, hnum), hedge_dstpoint(geohandle, hnum), value);
+}
+
+function
+int setedgegroup(
+	int geohandle;
+	string groupname;
+	int hnum;
+	int value;
+	string mode;
+	) {
+	if(mode == "set") {
+		return setedgegroup(geohandle, groupname, hnum, value);
+	} else if(mode == "toggle" && value == 1) {
+		return setedgegroup(geohandle, groupname, hnum, !inedgegroup(geohandle, groupname, hnum));
+	} else {
+		return -1;
+	}
+}
+
+
+
+
+
+function
+int setnebedgegroup(
+	int geohandle;
+	string groupname;
+	int ptnum;
+	int value;
+	) {
+	int nebs[] = neighbours(geohandle, ptnum);
+	foreach (int index; int neb; nebs) {
+		setedgegroup(geohandle, groupname, ptnum, neb, value);
+	}
+	return geohandle;
+}
+
+function
+int setnebedgegroup(
+	int geohandle;
+	string groupname;
+	int ptnum;
+	int value;
+	string mode;
+	) {
+	int nebs[] = neighbours(geohandle, ptnum);
+	foreach (int index; int neb; nebs) {
+		setedgegroup(geohandle, groupname, ptnum, neb, value, mode);
+	}
+	return geohandle;
+}
+
+
+
+
+
+
+
+
+
+
+function
+int setprimgroup(
+	int geohandle;
+	string groupname;
+	int primnums[];
+	int value;
+	string mode;
+	) {
+	foreach (int primnum; primnums) {
+		setprimgroup(geohandle, groupname, primnum, value, mode);
+	}
+	return geohandle;
+}
+
+function
+int setpointgroup(
+	int geohandle;
+	string groupname;
+	int ptnums[];
+	int value;
+	string mode;
+	) {
+	foreach (int ptnum; ptnums) {
+		setpointgroup(geohandle, groupname, ptnum, value, mode);
+	}
+	return geohandle;
+}
+
+function
+int setvertexgroup(
+	int geohandle;
+	string groupname;
+	int primnums[];
+	int vtxnums[];
+	int value;
+	string mode;
+	) {
+	foreach (int index; int vtxnum; vtxnums) {
+		setvertexgroup(geohandle, groupname, primnums[index], vtxnum, value, mode);
+	}
+	return geohandle;
+}
+
+
+
+function
+int setedgegroup(
+	int geohandle;
+	string groupname;
+	int hnums[];
+	int value;
+	) {
+	foreach (int hnum; hnums) {
+		setedgegroup(geohandle, groupname, hedge_srcpoint(geohandle, hnum), hedge_dstpoint(geohandle, hnum), value);
+	}
+	return geohandle;
+}
+
+
+
+function
+int setnebedgegroup(
+	int geohandle;
+	string groupname;
+	int ptnums[];
+	int value;
+	string mode;
+	) {
+	foreach (int ptnum; ptnums) {
+		int nebs[] = neighbours(geohandle, ptnum);
+		foreach (int neb; nebs) {
+			setnebedgegroup(geohandle, groupname, ptnum, neb, value, mode);
+		}
+	}
+	return 1;
+}
+
+function
+int setnebedgegroup(
+	int geohandle;
+	string groupname;
+	int ptnums0[];
+	int ptnums1[];
+	int value;
+	string mode;
+	) {
+	int len = min(len(ptnums0), len(ptnums1));
+	for (int i = 0; i < len; ++i) {
+		setnebedgegroup(geohandle, groupname, ptnums0[i], ptnums1[i], value, mode);
+	}
+	return 1;
+}
+
+
+
+
+
+
+
+function
+int setprimgroup(
+	int geohandle;
+	string groupname;
+	int primnums[];
+	int value;
+	) {
+	foreach (int primnum; primnums) {
+		setprimgroup(geohandle, groupname, primnum, value);
+	}
+	return 1;
+}
+
+function
+int setpointgroup(
+	int geohandle;
+	string groupname;
+	int ptnums[];
+	int value;
+	) {
+	foreach (int ptnum; ptnums)
+		setpointgroup(geohandle, groupname, ptnum, value);
+	return 1;
+}
+
+function
+int setvertexgroup(
+	int geohandle;
+	string groupname;
+	int primnums[];
+	int vtxnums[];
+	int value;
+	) {
+	foreach (int index; int vtxnum; vtxnums) {
+		setvertexgroup(geohandle, groupname, primnums[index], vtxnum, value);
+	}
+	return 1;
+}
+
+function
+int setnebedgegroup(
+	int geohandle;
+	string groupname;
+	int ptnums[];
+	int value;
+	) {
+	foreach (int ptnum; ptnums) {
+		int nebs[] = neighbours(geohandle, ptnum);
+		foreach (int neb; nebs) {
+			setnebedgegroup(geohandle, groupname, ptnum, neb, value);
+		}
+	}
+	return 1;
+}
+
+function
+int setnebedgegroup(
+	int geohandle;
+	string groupname;
+	int ptnums0[];
+	int ptnums1[];
+	int value;
+	) {
+	int len = min(len(ptnums0), len(ptnums1));
+	for (int i = 0; i < len; ++i) {
+		setnebedgegroup(geohandle, groupname, ptnums0[i], ptnums1[i], value);
+	}
+	return 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int elemnums;
+	int value;
+	string mode;
+	) {
+	if ( elemclass == "prim" )
+		setprimgroup(geohandle, groupname, elemnum, value, mode);
+	else if ( elemclass == "point" )
+		setpointgroup(geohandle, groupname, elemnum, value, mode);
+	return 1;
+}
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int primnums;
+	int elemnums;
+	int value;
+	string mode;
+	) {
+	if ( elemclass == "vertex" ) {
+		setvertexgroup(geohandle, groupname, primnums, elemnum, value, mode);
+	} else if ( elemclass == "edge" ) {
+		setedgegroup(geohandle, groupname, primnums, elemnum, value, mode);
+	} else {
+		error("Invalid group class");
+	}
+	return 1;
+	return 1;
+}
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int elemnums[];
+	int value;
+	string mode;
+	) {
+	if ( elemclass == "prim" )
+		foreach (int elemnum; elemnums)
+			setprimgroup(geohandle, groupname, elemnum, value, mode);
+	else if ( elemclass == "point" )
+		foreach (int elemnum; elemnums)
+			setpointgroup(geohandle, groupname, elemnum, value, mode);
+	return 1;
+}
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int primnums[];
+	int elemnums[];
+	int value;
+	string mode;
+	) {
+	if ( elemclass == "vertex" )
+		foreach (int index; int elemnum; elemnums)
+			setvertexgroup(geohandle, groupname, primnums[index], elemnum, value, mode);
+	else if ( elemclass == "edge" ) {
+		foreach (int index; int elemnum; elemnums)
+			setedgegroup(geohandle, groupname, primnums[index], elemnum, value, mode);
+	}
+	else{
+		error("Invalid group class");
+	}
+	return 1;
+}
+
+
+function
+int ingroup(
+	int geo;
+	string attribclass;
+	int groupname;
+	int elemnum;
+	) {
+	if ( attribclass == "prim" )
+		return inprimgroup(geo, groupname, elemnum);
+	else if ( attribclass == "point" )
+		return inpointgroup(geo, groupname, elemnum);
+	else if ( attribclass == "vertex" )
+		return invertexgroup(geo, groupname, elemnum);
+	else
+		error('invalid class');
+}
+
+
+
+
+function
+int expandgroup(
+	int geo;
+	string attribclass;
+	int groupname;
+	) {
+	if ( attribclass == "prim" )
+		return expandprimgroup(geo, groupname);
+	else if ( attribclass == "point" )
+		return expandpointgroup(geo, groupname);
+	else
+		error('invalid class');
+}
+
+
+
+
+
+
+
+
+function
+int elemnumgroup(
+	int geo;
+	string attribclass;
+	int groupname;
+	int elemnum;
+	) {
+	return find(expandgroup(geo, attribclass, groupname), elemnum);
+	/*
+	int result = 0;
+	for (int i = 0; i < elemnum; ++i) {
+		if(ingroup(geo, attribclass, groupname, elemnum)) {
+			++result;
+		}
+	}
+	return result;
+	*/
+}
+
+function
+int ptnumgroup(
+	int geo;
+	int groupname;
+	int elemnum;
+	) {
+	return elemnumgroup(geo, 'point', groupname, elemnum);
+}
+
+function
+int primnumgroup(
+	int geo;
+	int groupname;
+	int elemnum;
+	) {
+	return elemnumgroup(geo, 'prim', groupname, elemnum);
+}
+
+
+
+
+
+
+#endif

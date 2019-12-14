@@ -1,0 +1,56 @@
+
+#ifndef __ORIENTDEEP_VFL__
+#define __ORIENTDEEP_VFL__
+
+#include <orientdeep.vfl>
+
+
+
+function
+vector slerp(
+    const vector pos0;
+    const vector pos1;
+    const float bias;
+    ) {
+    return qrotate(slerp({0,0,0,1}, dihedral(pos0, pos1), bias), pos0);
+}
+
+
+
+
+function
+vector dirrandom(
+    const vector dir;
+    const float cone_angle;
+    const vector seed;
+    ) {
+    if (cone_angle == 0) {
+        return dir;
+    } else {
+        return slerp(dir, normalize(random(seed)) * length(dir), cone_angle / 180);
+    }
+}
+
+
+
+function
+vector rotateaxis(
+    const vector dir;
+    const vector axis;
+    const float angle;
+    ) {
+    matrix3 m3 = ident();
+    rotate(m3, angle, axis);
+    return dir * m3;
+    /*
+    //https://baike.baidu.com/item/罗德里格旋转公式/18878562?fr=aladdin
+    vector naxis = normalize(axis);
+    float cosa = cos(angle);
+    return cosa * dir + (1-cosa) * naxis * dot(naxis, dir) + sin(angle) * cross(naxis, dir);
+    */
+}
+
+
+
+
+#endif

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  houdini OPmenu
+  2018-11-10
+  junvfx@foxmail.com
+
+    This file defines the menu items when right-clicking over parameters in
+    Houdini.
+	    <separatorItem/>
+-->
+
+<menuDocument>
+    <!-- menuDocument can only contain 1 menu element, whose id is 
+         implicitly "root_menu"  
+      -->
+    <menu>
+
+	    <scriptItem id="old_version">
+        <insertBefore />
+	    	<label>Add Old Version Node</label>
+	    <scriptPath>$MY_MENU_PATH/OPmenu.py</scriptPath>
+      </scriptItem>
+
+      <scriptItem id="out">
+        <insertBefore />
+        <label>Null To Out</label>
+      <scriptPath>$MY_MENU_PATH/OPmenu.py</scriptPath>
+      </scriptItem>
+
+    </menu>
+</menuDocument>

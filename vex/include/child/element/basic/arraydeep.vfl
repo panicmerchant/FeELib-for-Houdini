@@ -1,0 +1,1051 @@
+
+#ifndef __ARRAYDEEP_VFL__
+#define __ARRAYDEEP_VFL__
+
+#include <precompile.vfl>
+
+#include <constant.vfl>
+
+#include <arraydeep.vfl>
+
+
+
+
+#define FUNCswap0(type)\
+        function\
+        void swap(\
+            export type arg0, arg1;\
+            ) {\
+            type temp = arg0;\
+            arg0 = arg1;\
+            arg1 = temp;\
+        }\
+
+DEFINEFUNCall(FUNCswap0)
+
+#define FUNCswap1(type)\
+        function\
+        void swap(\
+            export type arr0[];\
+            int idx0;\
+            export type arr1[];\
+            int idx1;\
+            ) {\
+            type temp = arr0[idx0];\
+            arr0[idx0] = arr1[idx1];\
+            arr1[idx1] = temp;\
+        }\
+
+DEFINEFUNCall(FUNCswap1)
+
+#define FUNCswap2(type)\
+        function\
+        void swap(\
+            export type arr0[];\
+            int idx0;\
+            export type arg0;\
+            ) {\
+            type temp = arr0[idx0];\
+            arr0[idx0] = arg0;\
+            arg0 = temp;\
+        }\
+
+DEFINEFUNCall(FUNCswap2)
+
+#define FUNCswap3(type)\
+        function\
+        void swap(\
+            export type arg0;\
+            export type arr0[];\
+            int idx0;\
+            ) {\
+            swap(arr0, idx0, arg0);\
+        }\
+
+DEFINEFUNCall(FUNCswap3)
+
+
+#define FUNCswapbynumifv(type)\
+        function\
+        void swapbynum(\
+            type arg0, arg1;\
+            ) {\
+            if( sign(arg0 - arg1) == 1 ) swap(arg0, arg1);\
+        }\
+
+DEFINEFUNCifv(FUNCswapbynumifv)
+
+function
+void swapbynum(
+    string arg0, arg1;
+    ) {
+    if( len(arg0) > len(arg1) ) swap(arg0, arg1);
+}
+
+
+// float ser[] = serialize();
+
+function
+int[] serialize(
+    const int value[];
+    ) {
+    return value;
+}
+
+function
+float[] serialize(
+    const float value[];
+    ) {
+    return value;
+}
+
+function
+int[] serialize(
+    const int value;
+    ) {
+    return array(value);
+}
+
+function
+float[] serialize(
+    const float value;
+    ) {
+    return array(value);
+}
+
+function
+float[] serialize(
+    const vector2 value;
+    ) {
+    return array(value.x, value.y);
+}
+
+function
+float[] serialize(
+    const vector value;
+    ) {
+    return array(value.x, value.y, value.z);
+}
+
+function
+float[] serialize(
+    const vector4 value;
+    ) {
+    return array(value.x, value.y, value.z, value.w);
+}
+
+function
+float[] serialize(
+    const matrix2 value;
+    ) {
+    return array(value.xx, value.xy, value.yx, value.yy);
+}
+
+function
+float[] serialize(
+    const matrix3 value;
+    ) {
+    return array(value.xx, value.xy, value.xz, value.yx, value.yy, value.yz, value.zx, value.zy, value.zz);
+}
+
+function
+float[] serialize(
+    const matrix value;
+    ) {
+    return array(value.xx, value.xy, value.xz, value.xw, value.yx, value.yy, value.yz, value.yw, value.zx, value.zy, value.zz, value.zw, value.wx, value.wy, value.wz, value.ww);
+}
+
+
+
+
+
+
+
+function
+float unserialize(
+    const float arr[];
+    ) {
+    return arr[0];
+}
+
+function
+vector2 unserialize(
+    const float arr[];
+    ) {
+    return set(arr[0], arr[1]);
+}
+
+function
+vector unserialize(
+    const float arr[];
+    ) {
+    return set(arr[0], arr[1], arr[2]);
+}
+
+function
+vector4 unserialize(
+    const float arr[];
+    ) {
+    return set(arr[0], arr[1], arr[2], arr[3]);
+}
+
+function
+matrix2 unserialize(
+    const float arr[];
+    ) {
+    return set(arr[0], arr[1], arr[2], arr[3]);
+}
+
+function
+matrix3 unserialize(
+    const float arr[];
+    ) {
+    return set(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8]);
+}
+
+function
+matrix unserialize(
+    const float arr[];
+    ) {
+    return set(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10], arr[11], arr[12], arr[13], arr[14], arr[15]);
+}
+
+
+
+
+
+
+
+
+function
+void assign(
+    export vector2 arg0;
+    export vector2 arg1;
+    vector4 source;
+    ) {
+    assign(arg0.x, arg0.y, arg1.x, arg1.y, source);
+}
+
+function
+void assign(
+    export vector2 arg0;
+    export vector2 arg1;
+    matrix2 source;
+    ) {
+    assign(arg0.x, arg0.y, arg1.x, arg1.y, source);
+}
+
+function
+void assign(
+    export vector arg0;
+    export vector arg1;
+    export vector arg2;
+    matrix3 source;
+    ) {
+    assign(arg0.x, arg0.y, arg0.z, arg1.x, arg1.y, arg1.z, arg2.x, arg2.y, arg2.z, source);
+}
+
+function
+void assign(
+    export vector4 arg0;
+    export vector4 arg1;
+    export vector4 arg2;
+    export vector4 arg3;
+    matrix source;
+    ) {
+    assign(arg0.x, arg0.y, arg0.z, arg0.w, arg1.x, arg1.y, arg1.z, arg1.w, arg2.x, arg2.y, arg2.z, arg2.w, arg3.x, arg3.y, arg3.z, arg3.w, source);
+}
+
+function
+void assign(
+    export vector2 arg0[];
+    export vector2 arg1[];
+    vector4 source[];
+    ) {
+    foreach (int idx; vector4 item; source)
+        assign(arg0[idx], arg1[idx], item);
+}
+
+function
+void assign(
+    export vector2 arg0[];
+    export vector2 arg1[];
+    matrix2 source[];
+    ) {
+    foreach (int idx; matrix2 item; source)
+        assign(arg0[idx], arg1[idx], item);
+}
+
+function
+void assign(
+    export vector arg0[];
+    export vector arg1[];
+    export vector arg2[];
+    matrix3 source[];
+    ) {
+    foreach (int idx; matrix3 item; source)
+        assign(arg0[idx], arg1[idx], arg2[idx], item);
+}
+
+function
+void assign(
+    export vector4 arg0[];
+    export vector4 arg1[];
+    export vector4 arg2[];
+    export vector4 arg3[];
+    matrix source[];
+    ) {
+    foreach (int idx; matrix item; source)
+        assign(arg0[idx], arg1[idx], arg2[idx], arg3[idx], item);
+}
+
+
+/*
+function
+vector2 sort(
+    vector2 vec;
+    ) {
+    // x <= y
+    vector4 vectemp = vec;
+    swapbynum(vectemp.x, vectemp.y);
+    return vectemp;
+}
+
+function
+vector sort(
+    vector vec;
+    ) {
+    // x <= y <= z
+    vector4 vectemp = vec;
+    swapbynum(vectemp.x, vectemp.y);
+    swapbynum(vectemp.y, vectemp.z);
+    swapbynum(vectemp.x, vectemp.y);
+    return vectemp;
+}
+
+function
+vector4 sort(
+    vector4 vec;
+    ) {
+    // x <= y <= z <= w
+    vector4 vectemp = vec;
+    swapbynum(vectemp.x, vectemp.y);
+    swapbynum(vectemp.y, vectemp.z);
+    swapbynum(vectemp.z, vectemp.w);
+    swapbynum(vectemp.x, vectemp.y);
+    swapbynum(vectemp.y, vectemp.z);
+    swapbynum(vectemp.x, vectemp.y);
+    return vectemp;
+}
+*/
+
+
+#define FUNCsort(type)\
+        function\
+        type sort(\
+            const type vec;\
+            ) {\
+            float resultarr[] = serialize(vec);\
+            resultarr = sort(resultarr);\
+            return unserialize(resultarr);\
+        }\
+
+DEFINEFUNCv(FUNCsort)
+
+#define FUNCsortarr(type)\
+        function\
+        type[] sort(\
+            const type arr[];\
+            ) {\
+            float length2[];\
+            foreach(type vec; arr) {\
+                push(length2, length2(vec));\
+            }\
+            return reorder(arr, argsort(length2));\
+        }\
+
+DEFINEFUNCv(FUNCsortarr)
+
+#define FUNCexsort(type)\
+        function\
+        void exsort(\
+            export type arg;\
+            ) {\
+            arg = sort(arg);\
+        }\
+
+DEFINEFUNCv(FUNCexsort)
+
+#define FUNCexsortarr(type)\
+        function\
+        void exsort(\
+            export type arr[];\
+            ) {\
+            arr = sort(arr);\
+        }\
+
+DEFINEFUNCifv(FUNCexsortarr)
+
+
+
+
+#define FUNCreorder(type)\
+        function\
+        type reorder(\
+            const type vec;\
+            const int indices[];\
+            ) {\
+            float resultarr[] = serialize(vec);\
+            return unserialize(reorder(resultarr, indices));\
+        }\
+
+DEFINEFUNCv(FUNCreorder)
+
+
+
+#define FUNCargsort(type)\
+        function\
+        int[] argsort(\
+            const type vec;\
+            ) {\
+            float resultarr[] = serialize(vec);\
+            return argsort(resultarr);\
+        }\
+
+DEFINEFUNCv(FUNCargsort)
+
+
+
+#define FUNCmaxidx0(type)\
+        function\
+        int maxidx(\
+            const type arr[];\
+            ) {\
+            type max = max(arr);\
+            return find(arr, max);\
+        }\
+
+DEFINEFUNCifv(FUNCmaxidx0)
+
+#define FUNCmaxidx1(type)\
+        function\
+        int[] maxidx(\
+            const type arr[];\
+            ) {\
+            type max = max(arr);\
+            return find(arr, max);\
+        }\
+
+DEFINEFUNCifv(FUNCmaxidx1)
+
+#define FUNCminidx0(type)\
+        function\
+        int minidx(\
+            const type arr[];\
+            ) {\
+            type min = min(arr);\
+            return find(arr, min);\
+        }\
+
+DEFINEFUNCifv(FUNCminidx0)
+
+#define FUNCminidx1(type)\
+        function\
+        int[] minidx(\
+            const type arr[];\
+            ) {\
+            type min = min(arr);\
+            return find(arr, min);\
+        }\
+
+DEFINEFUNCifv(FUNCminidx1)
+
+
+
+
+#define FUNCuniquepush0(type)\
+        function\
+        void uniquepush(\
+            type arr[];\
+            const type arg;\
+            ) {\
+            if (int(find(arr, arg)) == -len(arr)-1) {\
+                push(arr, arg);\
+            }\
+        }\
+
+DEFINEFUNCall(FUNCuniquepush0)
+
+#define FUNCuniquepush1(type)\
+        function\
+        void uniquepush(\
+            type arr[];\
+            const type arg[];\
+            ) {\
+            foreach (type item; arg){\
+                uniquepush(arr, item);\
+            }\
+        }\
+
+DEFINEFUNCall(FUNCuniquepush1)
+
+
+
+
+
+#define FUNClast(type)\
+        function\
+        type last(\
+            const type arr[];\
+            ) {\
+            return arr[len(arr)-1];\
+        }\
+
+DEFINEFUNCall(FUNClast)
+
+#define FUNCfirst(type)\
+        function\
+        type first(\
+            const type arr[];\
+            ) {\
+            return arr[0];\
+        }\
+
+DEFINEFUNCall(FUNCfirst)
+
+
+
+
+#define FUNClastindex(type)\
+        function\
+        int lastindex(\
+            const type arr[];\
+            const int index;\
+            ) {\
+            int len = len(arr);\
+            if(index == 0) return len - 1;\
+            else return index - 1;\
+        }\
+
+DEFINEFUNCall(FUNClastindex)
+
+#define FUNCnextindex(type)\
+        function\
+        int nextindex(\
+            const type arr[];\
+            const int index;\
+            ) {\
+            int len = len(arr);\
+            if(index == len - 1) return 0;\
+            else return index + 1;\
+        }\
+
+DEFINEFUNCall(FUNCnextindex)
+
+#define FUNClastitem(type)\
+        function\
+        type lastitem(\
+            const type arr[];\
+            const int index;\
+            ) {\
+            return arr[lastindex(arr, index)];\
+        }\
+
+DEFINEFUNCall(FUNClastitem)
+
+#define FUNCnextitem(type)\
+        function\
+        type nextitem(\
+            const type arr[];\
+            const int index;\
+            ) {\
+            return arr[nextindex(arr, index)];\
+        }\
+
+DEFINEFUNCall(FUNCnextitem)
+
+
+
+
+#define FUNCequal0(type)\
+        function\
+        int equal(\
+            const type arg0, arg1;\
+            ) {\
+            if ( arg0 == arg1 ) {\
+                return 1;\
+            } else {\
+                return 0;\
+            }\
+        }\
+
+DEFINEFUNCall(FUNCequal0)
+
+#define FUNCequal1(type)\
+        function\
+        int equal(\
+            const type arg0[], arg1[];\
+            ) {\
+            if( len(arg0) != len(arg1) ) {\
+                return 0;\
+            }\
+            for(int i = len(arg0)-1; i > -1; --i) {\
+                /*if( arg0[i] != arg1[i] ) {*/\
+                if( !equal(arg0[i], arg1[i]) ) {\
+                    return 0;\
+                }\
+            }\
+            return 1;\
+        }\
+
+DEFINEFUNCall(FUNCequal1)
+
+
+
+#define FUNCfuzzyequal(type)\
+        function\
+        int fuzzyequal(\
+            const type arg0[], arg1[];\
+            ) {\
+            return equal(sort(arg0), sort(arg1));\
+        }\
+
+/*
+            type arrtemp0[] = arg0;\
+            type arrtemp1[] = arg1;\
+            sort(arrtemp0);\
+            sort(arrtemp1);\
+*/
+DEFINEFUNCifv(FUNCfuzzyequal)
+
+
+
+#define FUNCinclude(type)\
+        function\
+        int include(\
+            const type arr0[], arr1[];\
+            ) {\
+            if( len(arr0) < len(arr1) ) {\
+                return 0;\
+            }\
+            type tmparr0[] = arr0;\
+            for(int i = len(arr1)-1; i > -1; --i) {\
+                int findidx = find(tmparr0, arr1[i]);\
+                if( findidx < 0 ) {\
+                    return 0;\
+                }\
+                pop(tmparr0, findidx);\
+            }\
+            if( len(arr0) != len(arr1) ) {\
+                return 1;\
+            }\
+            return 2;\
+        }\
+
+DEFINEFUNCall(FUNCinclude)
+
+
+#define FUNCfuzzyincluded(type)\
+        function\
+        int fuzzyinclude(\
+            const type arr0[], arr1[];\
+            ) {\
+            type tmparr0[] = unique(arr0);\
+            type tmparr1[] = unique(arr1);\
+            return include(tmparr0, tmparr1);\
+        }\
+
+DEFINEFUNCall(FUNCfuzzyincluded)
+
+
+
+
+#define FUNCfind(type)\
+        function\
+        int find(\
+            const type arr0[], arr1[];\
+            ) {\
+            if(len(arr0) >= len(arr1)) {\
+                int flag, numiteration = len(arr0)-len(arr1)+1;\
+                for(int j = 0; j < numiteration; ++j) {\
+                    flag = 1;\
+                    for(int i = 0; i < len(arr1); ++i) {\
+                        if( arr1[i] != arr0[i+j] ) {\
+                            flag = 0;\
+                            break;\
+                        }\
+                    }\
+                    if ( flag ) {\
+                        return j;\
+                    }\
+                }\
+                return -1;\
+            } else {\
+                return -1;\
+            }\
+        }\
+
+DEFINEFUNCall(FUNCfind)
+
+
+
+#define FUNCshuffleif(type)\
+        function\
+        type[] shuffle(\
+            type arr[];\
+            ) {\
+            type arrtemp[] = arr;\
+            for (int i = 0; i < len(arr); ++i){\
+                float seed = (i+1) * arr[0];\
+                int randomnum = floor(random(seed) * (len(arr)-1));\
+                swap(arrtemp, i, arrtemp, randomnum);\
+            }\
+            return arrtemp;\
+        }\
+
+DEFINEFUNCif(FUNCshuffleif)
+
+
+
+#define FUNCshufflev(type)\
+        function\
+        type[] shuffle(\
+            type arr[];\
+            ) {\
+            type arrtemp[] = arr;\
+            for (int i = 0; i < len(arr); ++i){\
+                float seed = (i+1) * arr[0][0];\
+                int randomnum = floor(random(seed) * (len(arr)-1));\
+                swap(arrtemp, i, arrtemp, randomnum);\
+            }\
+            return arrtemp;\
+        }\
+
+DEFINEFUNCv(FUNCshufflev)
+
+
+#define FUNCshufflem(type)\
+        function\
+        type[] shuffle(\
+            const type arr[];\
+            ) {\
+            type arrtemp[] = arr;\
+            for (int i = 0; i < len(arr); ++i){\
+                float seed = (i+1) * arr[0].xx;\
+                int randomnum = floor(random(seed) * (len(arr)-1));\
+                swap(arrtemp, i, arrtemp, randomnum);\
+            }\
+            return arrtemp;\
+        }\
+
+DEFINEFUNCm(FUNCshufflem)
+
+
+#define FUNCmedian(type)\
+        function\
+        type median(\
+            const type arr[];\
+            ) {\
+            type arrtemp[] = sort(arr);\
+            int midlen = floor(len(arrtemp)/2);\
+            if(len(arrtemp) % 2 == 0) {\
+                return (arrtemp[midlen] + arrtemp[midlen-1]) / 2;\
+            } else {\
+                return arrtemp[midlen];\
+            }\
+        }\
+
+DEFINEFUNCifv(FUNCmedian)
+
+
+
+
+#define FUNCpop(type)\
+        function\
+        type[] pop(\
+            export type arr[];\
+            const int indices[];\
+            ) {\
+            int tmpindices[] = sort(indices);\
+            type result[];\
+            /* this is auto resize, so can't use foreach but reverse foreach */\
+            for(int i = len(tmpindices)-1; i>-1; --i){\
+                push(result, pop(arr, tmpindices[i]));\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCall(FUNCpop)
+
+
+// dont use this but pop() func
+#define FUNCremoveindex(type)\
+        function\
+        type[] removeindex(\
+            export type arr[];\
+            const int indices[];\
+            ) {\
+            return pop(arr, indices);\
+        }\
+
+DEFINEFUNCall(FUNCremoveindex)
+
+
+
+
+#define FUNCremovevalue(type)\
+        function\
+        int[] removevalue(\
+            export type arr[];\
+            const type values[];\
+            ) {\
+            /* this is auto resize */\
+            int result[];\
+            foreach (type value; values){\
+                push(result, removevalue(arr, value));\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCall(FUNCremovevalue)
+
+#define FUNCremovemultivalue0(type)\
+        function\
+        int removemultivalue(\
+            export type arr[];\
+            const type value;\
+            ) {\
+            int successtimes = -1;\
+            do {\
+                int success = removevalue(arr, value);\
+                ++successtimes;\
+            } while (success);\
+            return successtimes;\
+        }\
+
+DEFINEFUNCall(FUNCremovemultivalue0)
+
+#define FUNCremovemultivalue1(type)\
+        function\
+        int[] removemultivalue(\
+            export type arr[];\
+            const type values[];\
+            ) {\
+            /* this is auto resize */\
+            int result[];\
+            foreach (type value; values) {\
+                push(result, removemultivalue(arr, value));\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCall(FUNCremovemultivalue1)
+
+
+#define FUNCreverseindex0(type)\
+        function\
+        int[] reverseindex(\
+            const type arr[];\
+            const int index;\
+            ) {\
+            int result[] = naturalnum(len(arr));\
+            removevalue(result, index);\
+            return result;\
+        }\
+
+DEFINEFUNCall(FUNCreverseindex0)
+
+#define FUNCreverseindex1(type)\
+        function\
+        int[] reverseindex(\
+            const type arr[];\
+            const int indices[];\
+            ) {\
+            int result[] = naturalnum(len(arr));\
+            removevalue(result, indices);\
+            return result;\
+        }\
+
+DEFINEFUNCall(FUNCreverseindex1)
+
+#define FUNCpreserveindex(type)\
+        function\
+        type[] preserveindex(\
+            type arr[];\
+            const int indices[];\
+            ) {\
+            return pop(arr, reverseindex(arr, indices));\
+        }\
+
+DEFINEFUNCall(FUNCpreserveindex)
+
+
+#define FUNCpreservevalue(type)\
+        function\
+        type[] preservevalue(\
+            type arr[], arr0[];\
+            ) {\
+            type result[];\
+            foreach (type value; arr) {\
+                if ( find(arr0, value) > -1 ) {\
+                    push(result, value);\
+                }\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCall(FUNCpreservevalue)
+
+
+#define FUNCupush(type)\
+        function\
+        type[] upush(\
+            type arr0[];\
+            const type arr1[];\
+            ) {\
+            foreach (type item; arr1){\
+                upush(arr0, item);\
+            }\
+            return arr0;\
+        }\
+
+DEFINEFUNCall(FUNCupush)
+
+
+
+
+
+
+#define FUNCunique(type)\
+        function\
+        type[] unique(\
+            const type arr[];\
+            ) {\
+            type result[];\
+            uniquepush(result, arr);\
+            return result;\
+        }\
+
+DEFINEFUNCall(FUNCunique)
+
+#define FUNCuniqueneb(type)\
+        function\
+        type[] uniqueneb(\
+            const type arr[];\
+            ) {\
+            type result[];\
+            push(result, arr[0]);\
+            foreach (type item; arr){\
+                /*if ( !equal(item, result[-1]) ) {*/\
+                if ( item != result[-1] ) {\
+                    push(result, item);\
+                }\
+            }\
+            return result;\
+        }\
+
+DEFINEFUNCall(FUNCuniqueneb)
+
+
+
+function
+int[] offset(
+    const int arr[];
+    const int offsetvalue;
+    ) {
+    return reorder(arr, lineararray(offsetvalue, offsetvalue + len(arr), 1));
+}
+
+#define FUNCoffset(type)\
+        function\
+        type[] offset(\
+            const type arr[];\
+            const int offsetvalue;\
+            ) {\
+            return reorder(arr, offset(naturalnumber(len(arr)), offsetvalue));\
+            /*\
+            int naturalnumber[] = naturalnumber(len);\
+            naturalnumber = sum(naturalnumber, offsetvalue);\
+            naturalnumber = mod(naturalnumber, len);\
+            return reorder(arr, naturalnumber);\
+            */\
+        }\
+
+DEFINEFUNCfvms(FUNCoffset)
+
+
+
+
+
+
+
+
+
+
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+//冒泡排序
+
+int[] sortarray(export int arr[];) {
+    //equal to function sort()
+    //Sort int array from small to big
+    int len = len(arr);
+    for(int i = 0; i < len - 1; i++)
+        for(int j = 0; j < len - 1 - i; j++)
+            swapbynum(arr[j], arr[j+1]);
+    return arr;
+}
+
+float[] sortarray(export float arr[];) {
+    //equal to function sort()
+    //Sort float array from small to big
+    int len = len(arr);
+    for(int i = 0; i < len - 1; i++)
+        for(int j = 0; j < len - 1 - i; j++)
+            swapbynum(arr[j], arr[j+1]);
+    return arr;
+}
+
+vector[] sortarray(export vector arr[];) {
+    //use func argsort() can get an easy ver
+    //Sort vector array by length from small to big
+    //example: match transform
+    
+    int len = len(arr);
+    float length[];
+
+    for(int i = 0; i < len; i++)
+    length[i] = length(arr[i]);
+
+    for(int i = 0; i < len - 1; i++) {
+        for(int j = 0; j < len - 1 - i; j++) {
+            if(length[j] > length[j+1]) {
+                swap(length[j], length[j+1]);
+                swap(arr[j], arr[j+1]);
+            }
+        }
+    }
+    return arr;
+}
+
+*/
+

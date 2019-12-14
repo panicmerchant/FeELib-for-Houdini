@@ -1,0 +1,55 @@
+
+#ifndef __CLIP_VFL__
+#define __CLIP_VFL__
+
+#include <clip.vfl>
+
+
+
+#include <hedge.vfl>
+
+
+function
+void quadclip(
+    int geo;
+    int prim;
+    int axis;//0 or 1
+    float ratio;// 0 < ratio < 1
+    ) {
+    vector2 clip_uv_A;
+    clip_uv_A[axis] = 1;
+    clip_uv_A[(axis + 1) % 2] = ratio;
+    vector2 clip_uv_B;
+    clip_uv_B[axis] = 0;
+    clip_uv_B[(axis + 1) % 2] = ratio;
+    
+    vector clip_pos_A = primuv(geo, "P", prim, clip_uv_A);
+    vector clip_pos_B = primuv(geo, "P", prim, clip_uv_B);
+
+    int A = addpoint(geo, clip_pos_A);
+    int B = addpoint(geo, clip_pos_B);
+
+    int current_edge = cloesthedge(geo, prim, clip_pos_A);
+    int previous_edge = hedge_prev(geo, current_edge);
+
+    int A_prim_src_pt = hedge_srcpoint(geo, current_edge);
+    int A_prim_dst_pt = hedge_srcpoint(geo, previous_edge);
+    int B_prim_src_pt = hedge_srcpoint(geo, hedge_next(geo, current_edge));
+    int B_prim_dst_pt = hedge_srcpoint(geo, hedge_prev(geo, previous_edge));
+
+    int A_prim = addprim(geo, "poly", A_prim_src_pt, A, B, A_prim_dst_pt);
+    int B_prim = addprim(geo, "poly", B_prim_src_pt, B_prim_dst_pt, B, A);
+    removeprim(geo, prim, 0);
+}
+
+
+
+
+
+
+
+
+
+
+
+#endif
