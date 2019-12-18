@@ -1,0 +1,16 @@
+{
+    "path": "$LibPath/SideFXLabs-Development", 
+    "env": [
+        {
+            "sidefxlabs_current_version": "MANUAL"
+        }, 
+        {
+            "PATH": {
+                "method": "prepend", 
+                "value": [
+                    "$LibPath/SideFXLabs-Development/bin"
+                ]
+            }
+        }
+    ]
+}
