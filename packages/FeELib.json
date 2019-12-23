@@ -1,8 +1,8 @@
 {
-    "path": "$LibPath/FeE", 
+    "path": "$LibPath/FeELib-for-Houdini", 
     "env": [
         {
-            "FeELib": "$LibPath/FeE",
+            "FeELib": "$LibPath/FeELib-for-Houdini",
         },
         {
             "HOUDINI_OTLSCAN_PATH": {
