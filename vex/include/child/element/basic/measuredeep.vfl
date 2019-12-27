@@ -112,13 +112,13 @@ f@dis1 = linepointdistance(linepos0, linepos1, pos);
 
 
 
-
 function
 float manhattan_distance(
     vector pos0, pos1;
     ) {
     return sum(abs(pos0-pos1));
 }
+#define mandistance manhattan_distance
 
 function
 float minkowski_distance(
