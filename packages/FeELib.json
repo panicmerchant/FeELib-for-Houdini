@@ -105,6 +105,7 @@
                     "$FeELib/otls/Generator/Fractal",
                     "$FeELib/otls/Generator/Layout",
                     "$FeELib/otls/Generator/Outline",
+                    "$FeELib/otls/Generator/Poly Expand",
                     "$FeELib/otls/Generator/Primitive",
                     "$FeELib/otls/Generator/Sample",
                     "$FeELib/otls/Generator/Stylize",
