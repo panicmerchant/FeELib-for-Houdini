@@ -80,6 +80,26 @@ DEFINEFUNCfv(FUNCbezier4)
 
 DEFINEFUNCfv(FUNCbezier5)
 
+#define FUNCbezier6(type)\
+        function\
+        type bezier(\
+            type a;\
+            type b;\
+            type c;\
+            type d;\
+            type e;\
+            type f;\
+            float bias;\
+            ) {\
+            type temp0 = bezier(a, b, bias);\
+            type temp1 = bezier(b, c, bias);\
+            type temp2 = bezier(c, d, bias);\
+            type temp3 = bezier(d, e, bias);\
+            type temp4 = bezier(e, f, bias);\
+            return bezier(temp0, temp1, temp2, temp3, temp4, bias);\
+        }\
+
+DEFINEFUNCfv(FUNCbezier6)
 
 
 #define FUNCsmoothstep(type)\
