@@ -286,10 +286,8 @@ FUNCvolumeid2(float, string, FUNCifvIDXArgv, FUNCifvIDXParav)
             const int geo;\
             const type prim;\
             ) {\
-            if (1)\
-                return getbbox_size(geo) / volumeres(geo, prim);\
-            else\
-                return volumevoxeldiameter(geo, prim) / sqrt(3);\
+            return getbbox_size(geo) / volumeres(geo, prim);\
+            /*return volumevoxeldiameter(geo, prim) / sqrt(3);*/\
         }\
 
 DEFINEFUNCis(FUNCvolumevoxelsize)
