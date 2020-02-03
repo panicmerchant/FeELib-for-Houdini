@@ -105,6 +105,7 @@
                     "$FeELib/otls/Generator/Primitive",
                     "$FeELib/otls/Generator/Sample",
                     "$FeELib/otls/Generator/Stylize",
+                    "$FeELib/otls/Generator/Volume",
                     "$FeELib/otls/Geo/Ball",
                     "$FeELib/otls/Geo/Box",
                     "$FeELib/otls/Geo/Building",

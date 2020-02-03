@@ -1,8 +1,8 @@
 
-#ifndef __TRIANGLECENTRE_VFL__
-#define __TRIANGLECENTRE_VFL__
+#ifndef __TRIANGLECENTER_VFL__
+#define __TRIANGLECENTER_VFL__
 
-#include <trianglecentre.vfl>
+#include <trianglecenter.vfl>
 
 
 
@@ -28,7 +28,7 @@ vector centroid(
 
 
 
-vector incentre(
+vector incenter(
     const vector pos0;
     const vector pos1;
     const vector pos2;
@@ -45,12 +45,12 @@ vector incentre(
     return set(a*a0 + b*b0 + c*c0, a*a1 + b*b1 + c*c1, a*a2 + b*b2 + c*c2) / tri_C(pos0, pos1, pos2);
 }
 
-vector incentre(
+vector incenter(
     const int geo;
     const int primnum;
     ) {
     vector pos[] = primpointspos(geo, primnum);
-    return incentre(pos[0], pos[1], pos[2]);
+    return incenter(pos[0], pos[1], pos[2]);
 }
 
 float inradius(
@@ -76,7 +76,7 @@ void incircle(
     export vector center;
     export float radius;
     ) {
-    center = incentre(pos0, pos1, pos2);
+    center = incenter(pos0, pos1, pos2);
     radius = inradius(pos0, pos1, pos2);
 }
 
@@ -99,14 +99,14 @@ vector inscribedcircle_center(
     const vector pos1;
     const vector pos2;
     ) {
-    return incentre(pos0, pos1, pos2);
+    return incenter(pos0, pos1, pos2);
 }
 
 vector inscribedcircle_center(
     const int geo;
     const int primnum;
     ) {
-    return incentre(geo, primnum);
+    return incenter(geo, primnum);
 }
 
 float inscribedcircle_radius(
@@ -167,23 +167,23 @@ vector[] orthictriangle(
     return orthictriangle(pos[0], pos[1], pos[2]);
 }
 
-vector orthocentre(
+vector orthocenter(
     const vector pos0;
     const vector pos1;
     const vector pos2;
     ) {
     vector orthictriangle[] = orthictriangle(pos0, pos1, pos2);
-    return incentre(orthictriangle[0], orthictriangle[1], orthictriangle[2]);
-    // vector orthocentre = orthocentre(pos0, pos1, pos2);
+    return incenter(orthictriangle[0], orthictriangle[1], orthictriangle[2]);
+    // vector orthocenter = orthocenter(pos0, pos1, pos2);
 }
 
-vector orthocentre(
+vector orthocenter(
     const int geo;
     const int primnum;
     ) {
     vector pos[] = primpointspos(geo, primnum);
-    return orthocentre(pos[0], pos[1], pos[2]);
-    // vector orthocentre = orthocentre(geo, primnum);
+    return orthocenter(pos[0], pos[1], pos[2]);
+    // vector orthocenter = orthocenter(geo, primnum);
 }
 
 
@@ -192,11 +192,25 @@ vector orthocentre(
 
 
 
-
-vector circumcentre(
-    const vector pos0;
-    const vector pos1;
-    const vector pos2;
+/*
+function
+vector circum(
+    vector a, b, c;
+    ) {
+    //shout out to wikipedia, i think there are more compact ones but i cant be arsed
+    vector center, alpha, beta, ab;
+    alpha = a - c;
+    beta = b - c;
+    ab = cross(alpha, beta);
+    center = (pow(length(alpha), 2) * beta) - (pow(length(beta), 2) * alpha);
+    center = cross(center, ab);
+    center = center / (2 * pow(length(ab), 2));
+    center += c;
+    return center;
+}
+*/
+vector circumcenter(
+    const vector pos0, pos1, pos2;
     ) {
     // https://www.zhihu.com/question/40422123/answer/95637252
 
@@ -223,24 +237,24 @@ vector circumcentre(
 
     vector center;
 	center[0] = -(b1*c2*d3 - b1*c3*d2 - b2*c1*d3 + b2*c3*d1 + b3*c1*d2 - b3*c2*d1)
-		/(a1*b2*c3 - a1*b3*c2 - a2*b1*c3 + a2*b3*c1 + a3*b1*c2 - a3*b2*c1);
+		      / (a1*b2*c3 - a1*b3*c2 - a2*b1*c3 + a2*b3*c1 + a3*b1*c2 - a3*b2*c1);
 	center[1] =  (a1*c2*d3 - a1*c3*d2 - a2*c1*d3 + a2*c3*d1 + a3*c1*d2 - a3*c2*d1)
-		/(a1*b2*c3 - a1*b3*c2 - a2*b1*c3 + a2*b3*c1 + a3*b1*c2 - a3*b2*c1);
+		      / (a1*b2*c3 - a1*b3*c2 - a2*b1*c3 + a2*b3*c1 + a3*b1*c2 - a3*b2*c1);
 	center[2] = -(a1*b2*d3 - a1*b3*d2 - a2*b1*d3 + a2*b3*d1 + a3*b1*d2 - a3*b2*d1)
-		/(a1*b2*c3 - a1*b3*c2 - a2*b1*c3 + a2*b3*c1 + a3*b1*c2 - a3*b2*c1);
+		      / (a1*b2*c3 - a1*b3*c2 - a2*b1*c3 + a2*b3*c1 + a3*b1*c2 - a3*b2*c1);
 
 	return center;
-    // vector circumcentre = circumcentre(pos0, pos1, pos2);
-    // vector circumcentre = circumcentre(pos[0], pos[1], pos[2]);
+    // vector circumcenter = circumcenter(pos0, pos1, pos2);
+    // vector circumcenter = circumcenter(pos[0], pos[1], pos[2]);
 }
 
-vector circumcentre(
+vector circumcenter(
     const int geo;
     const int primnum;
     ) {
     vector pos[] = primpointspos(geo, primnum);
-    return circumcentre(pos[0], pos[1], pos[2]);
-    // vector circumcentre = circumcentre(geo, primnum);
+    return circumcenter(pos[0], pos[1], pos[2]);
+    // vector circumcenter = circumcenter(geo, primnum);
 }
 
 float circumradius(
@@ -269,7 +283,7 @@ void circumcircle(
     export vector center;
     export float radius;
     ) {
-    center = circumcentre(pos0, pos1, pos2);
+    center = circumcenter(pos0, pos1, pos2);
     radius = circumradius(pos0, pos1, pos2);
 }
 
@@ -288,14 +302,14 @@ vector threepointcircle_center(
     const vector pos1;
     const vector pos2;
     ) {
-	return circumcentre(pos0, pos1, pos2);
+	return circumcenter(pos0, pos1, pos2);
 }
 
 vector threepointcircle_center(
     const int geo;
     const int primnum;
     ) {
-    return circumcentre(geo, primnum);
+    return circumcenter(geo, primnum);
 }
 
 float threepointcircle_radius(
