@@ -18,14 +18,77 @@
 
 
 
+
+function
+int[] polylineneighbours(
+    int geo;
+    int primnum;
+    ) {
+    int nebs[], primpoints[] = primpoints(geo, primnum);
+    foreach (int primpoint; primpoints){
+        int pointprims[] = pointprims(geo, primpoint);
+        removevalue(pointprims, primnum);
+        uniquepush(nebs, pointprims);
+    }
+    return nebs;
+}
+
+/*
+function
+int[] polylineneighbours(
+    int geo;
+    string groupname;
+    int primnum;
+    ) {
+    int nebs[] = polylineneighbours(geo, primnum);
+    foreach (int neb; nebs){
+        if (inprimgroup(geo, groupname, neb)) {
+            
+        }
+    }
+    return nebs;
+}
+*/
+
+
+
+function
+int[] polyedgeneighbours(
+    int geo;
+    int primnum;
+    ) {
+    int result[];
+    int start = primhedge(geo, primnum);
+    int hedge = start;
+    int flag;
+    while ( hedge != -1 ) {
+        flag = 1;
+        for (int nh = hedge_nextequiv(geo, hedge); nh != hedge; nh = hedge_nextequiv(geo, nh)) {
+            int prim = hedge_prim(geo, nh);
+            if (prim != -1 && prim != primnum) {
+                push(result, prim);
+                flag = 0;
+            }
+        }
+        if ( flag ) {
+            push(result, -1);
+        }
+        hedge = hedge_next(geo, hedge);
+        if (hedge == start) break;
+    }
+    return result;
+}
+
+
 function
 int[] neighbours(
     const int geo;
     const int ptnums[];
     ) {
     int nebs[];
-    foreach (int ptnum; ptnums)
+    foreach (int ptnum; ptnums) {
         push(nebs, neighbours(geo, ptnum));
+    }
     removevalue(nebs, ptnums);
     return nebs;
 }

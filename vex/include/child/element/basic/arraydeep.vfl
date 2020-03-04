@@ -469,7 +469,7 @@ DEFINEFUNCifv(FUNCminidx1)
             type arr[];\
             const type arg;\
             ) {\
-            if (int(find(arr, arg)) == -len(arr)-1) {\
+            if ( int(find(arr, arg)) == -len(arr)-1 ) {\
                 push(arr, arg);\
             }\
         }\
@@ -482,7 +482,7 @@ DEFINEFUNCall(FUNCuniquepush0)
             type arr[];\
             const type arg[];\
             ) {\
-            foreach (type item; arg){\
+            foreach (type item; arg) {\
                 uniquepush(arr, item);\
             }\
         }\
@@ -896,7 +896,7 @@ DEFINEFUNCall(FUNCpreserveindex)
 
 DEFINEFUNCall(FUNCpreservevalue)
 
-
+/*
 #define FUNCupush(type)\
         function\
         type[] upush(\
@@ -910,7 +910,7 @@ DEFINEFUNCall(FUNCpreservevalue)
         }\
 
 DEFINEFUNCall(FUNCupush)
-
+*/
 
 
 
