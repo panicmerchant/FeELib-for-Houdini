@@ -106,50 +106,156 @@ these has been defined in <math.h>
 #endif
 
 
-
-#define FUNClineararray(type)\
+#define FUNClinearnumber(type)\
         function\
-        type[] lineararray(\
+        void linearnumber(\
+            export type arr[];\
+            type start, end, increment;\
+            ) {\
+            if (increment == 0) {\
+                resize(arr, 0);\
+                warning("death cycle");\
+                return;\
+            }\
+                \
+            int len = floor((end - start) / increment);\
+            if (len < 0) {\
+                resize(arr, 0);\
+                return;\
+            }\
+                \
+            resize(arr, len);\
+            arr[0] = start;\
+            for (int i = 1; i < len; ++i) {\
+                arr[i] = arr[i-1] + increment;\
+            }\
+        }\
+
+DEFINEFUNCif(FUNClinearnumber)
+
+#define FUNClinearnumber000(type)\
+        function\
+        void linearnumber(\
+            export string arr[];\
+            type start, end, increment;\
+            ) {\
+            if (increment == 0) {\
+                resize(arr, 0);\
+                warning("death cycle");\
+                return;\
+            }\
+                \
+            int len = floor((end - start) / increment);\
+            if (len < 0) {\
+                resize(arr, 0);\
+                return;\
+            }\
+                \
+            resize(arr, len);\
+            type value = start;\
+            arr[0] = itoa(value);\
+            for (int i = 1; i < len; ++i) {\
+                value += increment;\
+                arr[i] = itoa(value);\
+            }\
+        }\
+
+DEFINEFUNCi(FUNClinearnumber000)
+
+
+#define FUNClinearnumber001(type)\
+        function\
+        void linearnumber(\
+            export string arr[];\
+            type start, end;\
+            ) {\
+            linearnumber(arr, start, end, 1);\
+        }\
+
+DEFINEFUNCi(FUNClinearnumber001)
+
+#define FUNClinearnumber002(type)\
+        function\
+        void linearnumber(\
+            export string arr[];\
+            type end;\
+            ) {\
+            linearnumber(arr, 0, end, 1);\
+        }\
+
+DEFINEFUNCi(FUNClinearnumber002)
+
+
+#define FUNClinearnumber01(type)\
+        function\
+        void linearnumber(\
+            export type arr[];\
+            type start, end;\
+            ) {\
+            linearnumber(arr, start, end, 1);\
+        }\
+
+DEFINEFUNCif(FUNClinearnumber01)
+
+#define FUNClinearnumber02(type)\
+        function\
+        void linearnumber(\
+            export type arr[];\
+            type end;\
+            ) {\
+            linearnumber(arr, 0, end, 1);\
+        }\
+
+DEFINEFUNCif(FUNClinearnumber02)
+
+#define FUNClinearnumber0(type)\
+        function\
+        type[] linearnumber(\
             type start, end, increment;\
             ) {\
             type arr[];\
-            if (increment > 0) {\
-                for (type i = start; i < end; i += increment) {\
-                    push(arr, i);\
-                }\
-            } else if (increment < 0) {\
-                for (type i = start; i > end; i += increment) {\
-                    push(arr, i);\
-                }\
-            } else {\
-                error("death cycle");\
-            }\
+            linearnumber(arr, start, end, increment);\
             return arr;\
         }\
 
 /*
-int lineararrayi[] = lineararray(start, end, 1);
+int linearnumberi[] = linearnumber(start, end, 1);
 */
-DEFINEFUNCif(FUNClineararray)
+DEFINEFUNCif(FUNClinearnumber0)
 
-
-#define FUNClineararray1(type)\
+#define FUNClinearnumber1(type)\
         function\
-        type[] lineararray(\
+        type[] linearnumber(\
             type start, end;\
             ) {\
-            return lineararray(start, end, 1);\
+            type arr[];\
+            linearnumber(arr, start, end);\
+            return arr;\
         }\
 
-DEFINEFUNCif(FUNClineararray1)
+DEFINEFUNCif(FUNClinearnumber1)
+
+#define FUNClinearnumber2(type)\
+        function\
+        type[] linearnumber(\
+            type end;\
+            ) {\
+            type arr[];\
+            linearnumber(arr, end);\
+            return arr;\
+        }\
+
+DEFINEFUNCif(FUNClinearnumber2)
+
+
 
 function
-vector[] lineararray(
+vector[] linearnumber(
     vector start, end, increment;
     ) {
-    float x[] = lineararray(start.x, end.x, increment.x),
-          y[] = lineararray(start.y, end.y, increment.y),
-          z[] = lineararray(start.z, end.z, increment.z);
+    float x[] = linearnumber(start.x, end.x, increment.x),
+          y[] = linearnumber(start.y, end.y, increment.y),
+          z[] = linearnumber(start.z, end.z, increment.z);
     vector result[];
     int minlen = min(len(x), len(y), len(z));
     for (int i = 0; i < minlen; ++i) {
@@ -158,24 +264,35 @@ vector[] lineararray(
     return result;
 }
 
-#define lineararrayi lineararray
-#define lineararrayf lineararray
-#define lineararrayv lineararray
+#define linearnumberi linearnumber
+#define linearnumberf linearnumber
+#define linearnumberv linearnumber
 
 
 
+#define FUNCnaturalnumber(type)\
+        function\
+        type[] naturalnumber(\
+            type end;\
+            ) {\
+            return linearnumber(0, end, 1);\
+        }\
 
-function
-int[] naturalnumber(
-    int end;
-    ) {
-    return lineararrayi(0, end, 1);
-}
-/*
-int naturalnumber[] = naturalnumber(end);
-*/
-
+DEFINEFUNCif(FUNCnaturalnumber)
 #define naturalnum naturalnumber
+
+
+#define FUNCpositivenumber(type)\
+        function\
+        type[] positivenumber(\
+            type end;\
+            ) {\
+            return linearnumber(1, end, 1);\
+        }\
+
+DEFINEFUNCif(FUNCpositivenumber)
+#define naturalnum naturalnumber
+
 
 
 /*
@@ -186,7 +303,7 @@ int[] combinatorialnaturalnumber(
     int n;
     ) {
     for
-    return lineararrayi(0, end, 1);
+    return linearnumberi(0, end, 1);
 }
 
 
