@@ -748,7 +748,7 @@ DEFINEFUNCm(FUNCshufflem)
             ) {\
             type arrtemp[] = sort(arr);\
             int midlen = floor(len(arrtemp)/2);\
-            if(len(arrtemp) % 2 == 0) {\
+            if ( len(arrtemp) % 2 == 0 ) {\
                 return (arrtemp[midlen] + arrtemp[midlen-1]) / 2;\
             } else {\
                 return arrtemp[midlen];\
@@ -756,6 +756,119 @@ DEFINEFUNCm(FUNCshufflem)
         }\
 
 DEFINEFUNCifv(FUNCmedian)
+
+#define med median
+
+
+#define FUNCmultiply(type)\
+        function\
+        type multiply(\
+            const type arr[];\
+            ) {\
+            if ( len(arr) == 0 ) {\
+                return 0;\
+            } else {\
+                type result = 1;\
+                foreach (type elem; arr) {\
+                    result *= elem;\
+                }\
+                return result;\
+            }\
+        }\
+
+DEFINEFUNCifv(FUNCmultiply)
+
+#define mul multiply
+#define mult multiply
+
+
+#define FUNCaggregate0(type)\
+        function\
+        type aggregate(\
+            const type arr[];\
+            int method;\
+            ) {\
+            if ( method == 0 ) {\
+                return max(arr);\
+            } else if ( method == 1 ) {\
+                return min(arr);\
+            } else if ( method == 2 ) {\
+                return avg(arr);\
+            } else if ( method == 3 ) {\
+                return mode(arr);\
+            } else if ( method == 4 ) {\
+                return median(arr);\
+            } else if ( method == 5 ) {\
+                return sum(arr);\
+            } else if ( method == 6 ) {\
+                return sumofsquare(arr);\
+            } else if ( method == 7 ) {\
+                return rootmeansqure(arr);\
+            } else if ( method == 8 ) {\
+                return arr[0];\
+            } else if ( method == 9 ) {\
+                return arr[-1];\
+            } else if ( method == 10 ) {\
+                return multiply(arr);\
+            } else {\
+                return error('fee aggregate int func error');\
+            }\
+        }\
+
+DEFINEFUNCifv(FUNCaggregate0)
+
+#define FUNCaggregate1(type)\
+        function\
+        type aggregate(\
+            const type arr[];\
+            string method;\
+            ) {\
+            if ( method == 'max' ) {\
+                return aggregate(arr, 0);\
+            } else if ( method == 'maximun' ) {\
+                return aggregate(arr, 0);\
+            } else if ( method == 'min' ) {\
+                return aggregate(arr, 1);\
+            } else if ( method == 'minimun' ) {\
+                return aggregate(arr, 1);\
+            } else if ( method == 'avg' ) {\
+                return aggregate(arr, 2);\
+            } else if ( method == 'average' ) {\
+                return aggregate(arr, 2);\
+            } else if ( method == 'mode' ) {\
+                return aggregate(arr, 3);\
+            } else if ( method == 'med' ) {\
+                return aggregate(arr, 4);\
+            } else if ( method == 'median' ) {\
+                return aggregate(arr, 4);\
+            } else if ( method == 'sum' ) {\
+                return aggregate(arr, 5);\
+            } else if ( method == 'summary' ) {\
+                return aggregate(arr, 5);\
+            } else if ( method == 'sumofsquares' ) {\
+                return aggregate(arr, 6);\
+            } else if ( method == 'rootmeansqure' ) {\
+                return aggregate(arr, 7);\
+            } else if ( method == 'first' ) {\
+                return aggregate(arr, 8);\
+            } else if ( method == 'firstmatch' ) {\
+                return aggregate(arr, 8);\
+            } else if ( method == 'last' ) {\
+                return aggregate(arr, 9);\
+            } else if ( method == 'lastmatch' ) {\
+                return aggregate(arr, 9);\
+            } else if ( method == 'mul' ) {\
+                return aggregate(arr, 10);\
+            } else if ( method == 'mult' ) {\
+                return aggregate(arr, 10);\
+            } else if ( method == 'multiply' ) {\
+                return aggregate(arr, 10);\
+            } else {\
+                return error('fee aggregate string func error');\
+            }\
+        }\
+
+DEFINEFUNCifv(FUNCaggregate1)
 
 
 

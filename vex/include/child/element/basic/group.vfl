@@ -5,6 +5,15 @@
 #include <group.vfl>
 
 
+function
+int invertexgroup(
+	int geohandle;
+	string groupname;
+	int primnum;
+	int vtxnum;
+	) {
+	return invertexgroup(geohandle, groupname, vertexindex(geohandle, primnum, vtxnum));
+}
 
 function
 int setvertexgroup(
@@ -347,17 +356,73 @@ int setnebedgegroup(
 function
 int setgroup(
 	int geohandle;
-	string elemclass;
+	int elemclass;
 	string groupname;
-	int elemnums;
+	int elemnum;
 	int value;
 	string mode;
 	) {
-	if ( elemclass == "prim" )
-		setprimgroup(geohandle, groupname, elemnum, value, mode);
-	else if ( elemclass == "point" )
-		setpointgroup(geohandle, groupname, elemnum, value, mode);
-	return 1;
+	if ( elemclass == 0 ) {
+		return setprimgroup(geohandle, groupname, elemnum, value, mode);
+	} else if ( elemclass == 1 ) {
+		return setpointgroup(geohandle, groupname, elemnum, value, mode);
+	} else if ( elemclass == 2 ) {
+		int hedge_srcpoint = hedge_srcpoint(geo, elemnum);
+		int hedge_dstpoint = hedge_dstpoint(geo, elemnum);
+		return setedgegroup(geo, groupname, hedge_srcpoint, hedge_dstpoint, value, mode);
+	} else if ( elemclass == 3 ) {
+		return setvertexgroup(geohandle, groupname, elemnum, value, mode);
+	} else {
+		error('fee setgroup function error');
+	}
+	return 0;
+}
+
+function
+int setgroup(
+	int geohandle;
+	int elemclass;
+	string groupname;
+	int primnum;
+	int elemnum;
+	int value;
+	string mode;
+	) {
+	if ( elemclass == 0 ) {
+		return setprimgroup(geohandle, groupname, elemnum, value, mode);
+	} else if ( elemclass == 1 ) {
+		return setpointgroup(geohandle, groupname, elemnum, value, mode);
+	} else if ( elemclass == 2 ) {
+		return setedgegroup(geohandle, groupname, primnum, elemnum, value, mode);
+	} else if ( elemclass == 3 ) {
+		return setvertexgroup(geohandle, groupname, primnum, elemnum, value, mode);
+	} else {
+		error('fee setgroup function error');
+	}
+	return 0;
+}
+
+function
+int setgroup(
+	int geohandle;
+	int elemclass;
+	string groupname;
+	int primnum;
+	int elemnum;
+	int value;
+	) {
+	return setgroup(geohandle, elemclass, groupname, elemnum, value, 'set');
+}
+
+function
+int setgroup(
+	int geohandle;
+	int elemclass;
+	string groupname;
+	int elemnum;
+	int value;
+	) {
+	return setgroup(geohandle, elemclass, groupname, elemnum, value, 'set');
 }
 
 function
@@ -365,19 +430,101 @@ int setgroup(
 	int geohandle;
 	string elemclass;
 	string groupname;
-	int primnums;
-	int elemnums;
+	int elemnum;
 	int value;
 	string mode;
 	) {
-	if ( elemclass == "vertex" ) {
-		setvertexgroup(geohandle, groupname, primnums, elemnum, value, mode);
-	} else if ( elemclass == "edge" ) {
-		setedgegroup(geohandle, groupname, primnums, elemnum, value, mode);
+	if ( elemclass == "pr" || elemclass == "prs" || elemclass == "prim" || elemclass == "prims" || elemclass == "primitive" || elemclass == "primitives" ) {
+		return setgroup(geohandle, 0, groupname, elemnum, value, mode);
+	} else if ( elemclass == "pt" || elemclass == "pts" || elemclass == "point" || elemclass == "points" ) {
+		return setgroup(geohandle, 1, groupname, elemnum, value, mode);
+	} else if ( elemclass == "edge" || elemclass == "edges" ) {
+		return setgroup(geohandle, 2, groupname, elemnum, value, mode);
+	} else if ( elemclass == "vtx" || elemclass == "vertex" || elemclass == "vertices" ) {
+		return setgroup(geohandle, 3, groupname, elemnum, value, mode);
 	} else {
-		error("Invalid group class");
+		return setgroup(geohandle, 4, groupname, elemnum, value, mode);
 	}
-	return 1;
+	return 0;
+}
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int elemnum;
+	int value;
+	) {
+	return setgroup(geohandle, elemclass, groupname, elemnum, value, 'set');
+}
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int primnum;
+	int elemnum;
+	int value;
+	string mode;
+	) {
+	if ( elemclass == "pr" || elemclass == "prs" || elemclass == "prim" || elemclass == "prims" || elemclass == "primitive" || elemclass == "primitives" ) {
+		return setgroup(geohandle, 0, groupname, elemnum, value, mode);
+	} else if ( elemclass == "pt" || elemclass == "pts" || elemclass == "point" || elemclass == "points" ) {
+		return setgroup(geohandle, 1, groupname, elemnum, value, mode);
+	} else if ( elemclass == "edge" || elemclass == "edges" ) {
+		return setgroup(geohandle, 2, groupname, primnum, elemnum, value, mode);
+	} else if ( elemclass == "vtx" || elemclass == "vertex" || elemclass == "vertices" ) {
+		return setgroup(geohandle, 3, groupname, primnum, elemnum, value, mode);
+	} else {
+		return setgroup(geohandle, 4, groupname, elemnum, value, mode);
+	}
+	return 0;
+}
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int primnum;
+	int elemnum;
+	int value;
+	) {
+	return setgroup(geohandle, elemclass, groupname, primnum, elemnum, value, 'set');
+}
+
+function
+int setgroup(
+	int geohandle;
+	int elemclass;
+	string groupname;
+	int elemnums[];
+	int value;
+	string mode;
+	) {
+	if ( elemclass == 0 ) {
+		foreach (int elemnum; elemnums) {
+			setprimgroup(geohandle, groupname, elemnum, value, mode);
+		}
+	} else if ( elemclass == 1 ) {
+		foreach (int elemnum; elemnums) {
+			setpointgroup(geohandle, groupname, elemnum, value, mode);
+		}
+	} else if ( elemclass == 2 ) {
+		foreach (int elemnum; elemnums) {
+			int hedge_srcpoint = hedge_srcpoint(geo, elemnum);
+			int hedge_dstpoint = hedge_dstpoint(geo, elemnum);
+			return setedgegroup(geo, groupname, hedge_srcpoint, hedge_dstpoint, value, mode);
+		}
+	} else if ( elemclass == 3 ) {
+		foreach (int elemnum; elemnums) {
+			setvertexgroup(geohandle, groupname, elemnum, value, mode);
+		}
+	} else {
+		error('fee setgroup function error');
+	}
 	return 1;
 }
 
@@ -390,12 +537,60 @@ int setgroup(
 	int value;
 	string mode;
 	) {
-	if ( elemclass == "prim" )
-		foreach (int elemnum; elemnums)
+	if ( elemclass == "pr" || elemclass == "prs" || elemclass == "prim" || elemclass == "prims" || elemclass == "primitive" || elemclass == "primitives" ) {
+		return setgroup(geohandle, 0, groupname, elemnums, value, mode);
+	} else if ( elemclass == "pt" || elemclass == "pts" || elemclass == "point" || elemclass == "points" ) {
+		return setgroup(geohandle, 1, groupname, elemnums, value, mode);
+	} else if ( elemclass == "edge" || elemclass == "edges" ) {
+		return setgroup(geohandle, 2, groupname, primnum, elemnums, value, mode);
+	} else if ( elemclass == "vtx" || elemclass == "vertex" || elemclass == "vertices" ) {
+		return setgroup(geohandle, 3, groupname, primnum, elemnums, value, mode);
+	} else {
+		return setgroup(geohandle, 4, groupname, elemnums, value, mode);
+	}
+	return 0;
+}
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int elemnums[];
+	int value;
+	) {
+	return setgroup(geohandle, elemclass, groupname, elemnums, value, 'set');
+}
+
+function
+int setgroup(
+	int geohandle;
+	int elemclass;
+	string groupname;
+	int primnums[];
+	int elemnums[];
+	int value;
+	string mode;
+	) {
+	if ( elemclass == 0 ) {
+		foreach (int elemnum; elemnums) {
 			setprimgroup(geohandle, groupname, elemnum, value, mode);
-	else if ( elemclass == "point" )
-		foreach (int elemnum; elemnums)
+		}
+	} else if ( elemclass == 1 ) {
+		foreach (int elemnum; elemnums) {
 			setpointgroup(geohandle, groupname, elemnum, value, mode);
+		}
+	} else if ( elemclass == 2 ) {
+		foreach (int index; int elemnum; elemnums) {
+			setedgegroup(geohandle, groupname, primnums[index], elemnum, value, mode);
+		}
+	} else if ( elemclass == 3 ) {
+		foreach (int index; int elemnum; elemnums) {
+			setvertexgroup(geohandle, groupname, primnums[index], elemnum, value, mode);
+		}
+	} else {
+		error("fee setgroup func error Invalid group class");
+	}
 	return 1;
 }
 
@@ -409,35 +604,119 @@ int setgroup(
 	int value;
 	string mode;
 	) {
-	if ( elemclass == "vertex" )
-		foreach (int index; int elemnum; elemnums)
-			setvertexgroup(geohandle, groupname, primnums[index], elemnum, value, mode);
-	else if ( elemclass == "edge" ) {
-		foreach (int index; int elemnum; elemnums)
-			setedgegroup(geohandle, groupname, primnums[index], elemnum, value, mode);
+	if ( elemclass == "pr" || elemclass == "prs" || elemclass == "prim" || elemclass == "prims" || elemclass == "primitive" || elemclass == "primitives" ) {
+		return setgroup(geohandle, 0, groupname, primnums, elemnums, value, mode);
+	} else if ( elemclass == "pt" || elemclass == "pts" || elemclass == "point" || elemclass == "points" ) {
+		return setgroup(geohandle, 1, groupname, primnums, elemnums, value, mode);
+	} else if ( elemclass == "edge" || elemclass == "edges" ) {
+		return setgroup(geohandle, 2, groupname, primnums, elemnums, value, mode);
+	} else if ( elemclass == "vtx" || elemclass == "vertex" || elemclass == "vertices" ) {
+		return setgroup(geohandle, 3, groupname, primnums, elemnums, value, mode);
+	} else {
+		return setgroup(geohandle, 4, groupname, primnums, elemnums, value, mode);
 	}
-	else{
-		error("Invalid group class");
-	}
-	return 1;
+	return 0;
+}
+
+function
+int setgroup(
+	int geohandle;
+	string elemclass;
+	string groupname;
+	int primnums[];
+	int elemnums[];
+	int value;
+	) {
+	return setgroup(geohandle, elemclass, groupname, primnums, elemnums, value, 'set');
 }
 
 
 function
 int ingroup(
 	int geo;
-	string attribclass;
-	int groupname;
+	int elemclass;
+	string groupname;
+	int elemnum0;
 	int elemnum;
 	) {
-	if ( attribclass == "prim" )
+	if ( elemclass == 0 ) {
 		return inprimgroup(geo, groupname, elemnum);
-	else if ( attribclass == "point" )
+	} else if ( elemclass == 1 ) {
 		return inpointgroup(geo, groupname, elemnum);
-	else if ( attribclass == "vertex" )
+	} else if ( elemclass == 2 ) {
+		return inedgegroup(geo, groupname, elemnum0, elemnum);
+	} else if ( elemclass == 3 ) {
+		return invertexgroup(geo, groupname, elemnum0, elemnum);
+	} else {
+		error('fee ingroup func error invalid class 644');
+	}
+	return -1;
+}
+
+function
+int ingroup(
+	int geo;
+	int elemclass;
+	string groupname;
+	int elemnum;
+	) {
+	if ( elemclass == 0 ) {
+		return inprimgroup(geo, groupname, elemnum);
+	} else if ( elemclass == 1 ) {
+		return inpointgroup(geo, groupname, elemnum);
+	} else if ( elemclass == 2 ) {
+		int hedge_srcpoint = hedge_srcpoint(geo, elemnum);
+		int hedge_dstpoint = hedge_dstpoint(geo, elemnum);
+		return inedgegroup(geo, groupname, hedge_srcpoint, hedge_dstpoint);
+	} else if ( elemclass == 3 ) {
 		return invertexgroup(geo, groupname, elemnum);
-	else
-		error('invalid class');
+	} else {
+		error('fee ingroup func error invalid class 665');
+	}
+	return -1;
+}
+
+function
+int ingroup(
+	int geo;
+	string elemclass;
+	string groupname;
+	int elemnum0;
+	int elemnum;
+	) {
+	if ( elemclass == "pr" || elemclass == "prs" || elemclass == "prim" || elemclass == "prims" || elemclass == "primitive" || elemclass == "primitives" ) {
+		return ingroup(geo, 0, groupname, elemnum);
+	} else if ( elemclass == "pt" || elemclass == "pts" || elemclass == "point" || elemclass == "points" ) {
+		return ingroup(geo, 1, groupname, elemnum);
+	} else if ( elemclass == "edge" || elemclass == "edges" ) {
+		return ingroup(geo, 2, groupname, elemnum0, elemnum);
+	} else if ( elemclass == "vtx" || elemclass == "vertex" || elemclass == "vertices" ) {
+		return ingroup(geo, 3, groupname, elemnum0, elemnum);
+	} else {
+		error('fee ingroup func error invalid class 687');
+	}
+	return -1;
+}
+
+function
+int ingroup(
+	int geo;
+	string elemclass;
+	string groupname;
+	int elemnum;
+	) {
+	if ( elemclass == "pr" || elemclass == "prs" || elemclass == "prim" || elemclass == "prims" || elemclass == "primitive" || elemclass == "primitives" ) {
+		return ingroup(geo, 0, groupname, elemnum);
+	} else if ( elemclass == "pt" || elemclass == "pts" || elemclass == "point" || elemclass == "points" ) {
+		return ingroup(geo, 1, groupname, elemnum);
+	} else if ( elemclass == "edge" || elemclass == "edges" ) {
+		return ingroup(geo, 2, groupname, elemnum);
+	} else if ( elemclass == "vtx" || elemclass == "vertex" || elemclass == "vertices" ) {
+		return ingroup(geo, 3, groupname, elemnum);
+	} else {
+		error('fee ingroup func error invalid class 706');
+	}
+	return -1;
 }
 
 
@@ -447,14 +726,16 @@ function
 int expandgroup(
 	int geo;
 	string attribclass;
-	int groupname;
+	string groupname;
 	) {
-	if ( attribclass == "prim" )
+	if ( elemclass == "pr" || elemclass == "prs" || elemclass == "prim" || elemclass == "prims" || elemclass == "primitive" || elemclass == "primitives" ) {
 		return expandprimgroup(geo, groupname);
-	else if ( attribclass == "point" )
+	} else if ( elemclass == "pt" || elemclass == "pts" || elemclass == "point" || elemclass == "points" ) {
 		return expandpointgroup(geo, groupname);
-	else
-		error('invalid class');
+	} else {
+		error('fee expandgroup func error invalid class');
+	}
+	return -1;
 }
 
 
@@ -468,7 +749,7 @@ function
 int elemnumgroup(
 	int geo;
 	string attribclass;
-	int groupname;
+	string groupname;
 	int elemnum;
 	) {
 	return find(expandgroup(geo, attribclass, groupname), elemnum);
@@ -486,7 +767,7 @@ int elemnumgroup(
 function
 int ptnumgroup(
 	int geo;
-	int groupname;
+	string groupname;
 	int elemnum;
 	) {
 	return elemnumgroup(geo, 'point', groupname, elemnum);
@@ -495,7 +776,7 @@ int ptnumgroup(
 function
 int primnumgroup(
 	int geo;
-	int groupname;
+	string groupname;
 	int elemnum;
 	) {
 	return elemnumgroup(geo, 'prim', groupname, elemnum);
