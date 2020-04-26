@@ -6,65 +6,51 @@
 
 
 
-
 function
 vector2 cartesiantopolar(
     const vector2 v;
     ) {
     float r = length(v);
     float th = acos(v.x/r);
-    vector2 a = set(r,th);
-    return a;
+    return set(r, th);
 }
 
 function
 vector2 cartesiantopolar(
-    const float f0;
-    const float f1;
+    const float x, y;
     ) {
-    float r = length(v);
-    float th = acos(v.x/r);
-    vector2 a = set(r,th);
-    return a;
+    return cartesiantopolar(set(x, y));
 }
 
 function
-vector2 cartesiantopolar(const vector2 v;){
-    float r = length(v);
-    float th = acos(v.x/r);
-    vector2 a = set(r,th);
-    return a;
-}
-
-function
-vector cartesiantopolar(vector v){
+vector cartesiantopolar(
+    vector v;
+    ) {
     float r = length(v);
     float th = acos(v.z/r);
     float phi = atan2(v.y, v.x);
-    vector a = set(r,th,phi);
-    return a;
+    return set(r, th, phi);
 }
 
 function
-vector2 frompolar(vector2 v){
-    float x=v.x*cos(v.y);
-    float y=v.x*sin(v.y);
-    vector2 a = set(x,y);
-    return a;
+vector2 polartocartesian(
+    const float radius, theta;
+    ) {
+    return set(radius*cos(theta), radius*sin(theta));
 }
 
 function
-vector frompolar(vector v){
-    float x=v.x*sin(v.y)*cos(v.z);
-    float y=v.x*sin(v.y)*sin(v.z);
-    float z=v.x*cos(v.y);
-    vector a = set(x,y,z);
-    return a;
+vector2 polartocartesian(
+    vector2 v;
+    ) {
+    return polartocartesian(v.x, v.y);
 }
 
 function
-vector tocartesian(vector v){
-    return frompolar(v); 
+vector polartocartesian(
+    vector v;
+    ) {
+    return set(v.x*sin(v.y)*cos(v.z), v.x*sin(v.y)*sin(v.z), v.x*cos(v.y));
 }
 
 
