@@ -142,7 +142,6 @@
                     "$FeELib/otls/Geo/Primitive/Surface",
                     "$FeELib/otls/Geo/Radial Symmetry",
                     "$FeELib/otls/Geo/Road",
-                    "$FeELib/otls/Geo/Rock",
                     "$FeELib/otls/Geo/Sphere",
                     "$FeELib/otls/Geo/Terrain",
                     "$FeELib/otls/Geo/Test Geometry",
