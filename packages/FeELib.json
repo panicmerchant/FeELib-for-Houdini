@@ -119,7 +119,6 @@
                     "$FeELib/otls/Geo/Box",
                     "$FeELib/otls/Geo/Building",
                     "$FeELib/otls/Geo/Building/Chinese",
-                    "$FeELib/otls/Geo/Chain",
                     "$FeELib/otls/Geo/Concrete",
                     "$FeELib/otls/Geo/Curve",
                     "$FeELib/otls/Geo/Hard Surface",
