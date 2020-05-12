@@ -407,7 +407,7 @@ vector4 pow(vector4 b,e;) {
                     result *= num;\
                 }\
                 return result;*/\
-                return pow(num, float(exp));\
+                return type(pow(num, float(exp)));\
             }\
         }\
 
@@ -664,6 +664,29 @@ DEFINEFUNCi(FUNCdec2bin)
         }\
 
 DEFINEFUNCfv(FUNCweight)
+
+
+
+
+
+
+function
+float[] create_pdf_fee(
+    float values[];
+    ) {
+    float min = min(values);
+    int len = len(values);
+    for (int i = 0; i < len; ++i) {
+        values[i] -= min;
+    }
+    float sum = sum(values);
+    float pdf[];
+    resize(pdf, len);
+    for (int i = 0; i < len; ++i) {
+        pdf[i] = values[i] / sum;
+    }
+    return pdf;
+}
 
 
 

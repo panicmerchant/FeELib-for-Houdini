@@ -1066,7 +1066,7 @@ int[] offset(
     const int arr[];
     const int offsetvalue;
     ) {
-    return reorder(arr, lineararray(offsetvalue, offsetvalue + len(arr), 1));
+    return reorder(arr, linearnumber(offsetvalue, offsetvalue + len(arr), 1));
 }
 
 #define FUNCoffset(type)\

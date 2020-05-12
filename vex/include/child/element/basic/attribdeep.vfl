@@ -195,7 +195,7 @@ int attribisarray(
 	const string attribname;
 	) {
 	int attribtype = attribtype(geo, attribclass, attribname);
-	if(attribtype < 0) {
+	if (attribtype < 0) {
 		warning("specified %s attributes do not exist.", attribname);
 		return -1;
 	} else if(attribtype > 2) {
@@ -314,13 +314,14 @@ DEFINEFUNCall(FUNCdetailattribisarray)
 			const int elemnums[];\
 			) {\
 			type attribvalue[];\
-			if(attribisarray(geo, attribclass, attribname)) {\
+			if (attribisarray(geo, attribclass, attribname)) {\
 				foreach (int elemnum; elemnums) {\
 					push(attribvalue, type[](attrib(geo, attribclass, attribname, elemnum)));\
 				}\
 			} else {\
-				foreach (int elemnum; elemnums) {\
-					push(attribvalue, type(attrib(geo, attribclass, attribname, elemnum)));\
+				resize(attribvalue, len(elemnums));\
+				foreach (int idx; int elemnum; elemnums) {\
+					attribvalue[idx] =  type(attrib(geo, attribclass, attribname, elemnum));\
 				}\
 			}\
 			return attribvalue;\
@@ -383,8 +384,9 @@ DEFINEFUNCall(FUNCattrib2)
 					push(attribvalue, type[](attrib(geo, attribclass, attribname, primnums[i], vtxnums[i])));\
 				}\
 			} else {\
+				resize(attribvalue, len);\
 				for (int i = 0; i < len; ++i) {\
-					push(attribvalue, type(attrib(geo, attribclass, attribname, primnums[i], vtxnums[i])));\
+					attribvalue[i] =  type(attrib(geo, attribclass, attribname, primnums[i], vtxnums[i]));\
 				}\
 			}\
 			return attribvalue;\
@@ -532,8 +534,9 @@ DEFINEFUNCall(FUNCvertex0)
 		type value;\
 		) {\
 		int result[];\
-		foreach (int ptnum; ptnums)\
+		foreach (int ptnum; ptnums) {\
 			push(result, setpointattrib(geo, attribname, ptnum, value));\
+		}\
 		return result;\
 	}\
 
@@ -558,8 +561,9 @@ DEFINEFUNCall(FUNCsetpointattrib0)
 		type value[];\
 		) {\
 		int result[];\
-		foreach (int ptnum; ptnums)\
+		foreach (int ptnum; ptnums) {\
 			push(result, setpointattrib(geo, attribname, ptnum, value));\
+		}\
 		return result;\
 	}\
 
@@ -575,8 +579,9 @@ DEFINEFUNCall(FUNCsetpointattrib1)
 		string mode;\
 		) {\
 		int result[];\
-		foreach (int ptnum; ptnums)\
+		foreach (int ptnum; ptnums) {\
 			push(result, setpointattrib(geo, attribname, ptnum, value, mode));\
+		}\
 		return result;\
 	}\
 
@@ -592,8 +597,9 @@ DEFINEFUNCall(FUNCsetpointattrib2)
 		string mode;\
 		) {\
 		int result[];\
-		foreach (int ptnum; ptnums)\
+		foreach (int ptnum; ptnums) {\
 			push(result, setpointattrib(geo, attribname, ptnum, value, mode));\
+		}\
 		return result;\
 	}\
 
@@ -613,8 +619,9 @@ DEFINEFUNCall(FUNCsetpointattrib3)
 		type value;\
 		) {\
 		int result[];\
-		foreach (int primnum; primnums)\
+		foreach (int primnum; primnums) {\
 			push(result, setprimattrib(geo, attribname, primnum, value));\
+		}\
 		return result;\
 	}\
 
@@ -629,8 +636,9 @@ DEFINEFUNCall(FUNCsetprimattrib0)
 		type value[];\
 		) {\
 		int result[];\
-		foreach (int primnum; primnums)\
+		foreach (int primnum; primnums) {\
 			push(result, setprimattrib(geo, attribname, primnum, value));\
+		}\
 		return result;\
 	}\
 
@@ -646,8 +654,9 @@ DEFINEFUNCall(FUNCsetprimattrib1)
 		string mode;\
 		) {\
 		int result[];\
-		foreach (int primnum; primnums)\
+		foreach (int primnum; primnums) {\
 			push(result, setprimattrib(geo, attribname, primnum, value, mode));\
+		}\
 		return result;\
 	}\
 
@@ -663,8 +672,9 @@ DEFINEFUNCall(FUNCsetprimattrib2)
 		string mode;\
 		) {\
 		int result[];\
-		foreach (int primnum; primnums)\
+		foreach (int primnum; primnums) {\
 			push(result, setprimattrib(geo, attribname, primnum, value, mode));\
+		}\
 		return result;\
 	}\
 
