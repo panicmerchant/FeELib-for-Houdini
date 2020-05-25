@@ -4,6 +4,10 @@
 
 #include <precompile.vfl>
 
+#include <arithmetic.vfl>
+
+
+
 #define DEFINEFUNCarithmetici(DEFINEFUNCname)\
         DEFINEFUNCname(int, int)\
 /*
@@ -70,7 +74,6 @@ DEFINEFUNCarithmeticifv()
 DEFINEFUNCarithmeticifvm()
 */
 
-#include <arithmetic.vfl>
 
 
 

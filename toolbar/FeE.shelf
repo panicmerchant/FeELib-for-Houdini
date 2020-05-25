@@ -25,7 +25,6 @@
     <memberTool name="updatemode"/>
     <memberTool name="setdesktop_to_169_tech"/>
     <memberTool name="tool_4"/>
-    <memberTool name="detailwrangle"/>
   </toolshelf>
 
   <tool name="create new output node" label="create new output node" icon="PLASMA_App">
