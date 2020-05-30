@@ -65,6 +65,20 @@ int primpointsneb(
 
 
 
+////////////////////////////////////point to point/////////////////////////////////
+
+function
+int[] pointprimspoints(
+    const int geo;
+    const int ptnum;
+    ) {
+    int result[], pointprims[] = pointprims(geo, ptnum);
+    foreach (int pointprim; pointprims) {
+        uniquepush(result, primpoints(geo, pointprim));
+    }
+    return result;
+}
+
 
 
 #endif

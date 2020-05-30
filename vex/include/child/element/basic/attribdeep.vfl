@@ -305,6 +305,44 @@ DEFINEFUNCall(FUNCdetailattribisarray)
 */
 
 
+#define FUNCsetattrib0(type)\
+		function\
+		int setattrib(\
+			const int geo;\
+			const string attribclass;\
+			const string attribname;\
+			const int elemnum;\
+			const type value;\
+			const string mode;\
+			) {\
+			if ( attribclass == 'vertex' ) {\
+				return setattrib(geo, attribclass, attribname, -1, elemnum, value, mode);\
+			} else {\
+				return setattrib(geo, attribclass, attribname, elemnum, 0, value, mode);\
+			}\
+		}\
+
+DEFINEFUNCfvms(FUNCsetattrib0)
+
+#define FUNCsetattrib1(type)\
+		function\
+		int setattrib(\
+			const int geo;\
+			const string attribclass;\
+			const string attribname;\
+			const int elemnum;\
+			const type value;\
+			) {\
+			if ( attribclass == 'vertex' ) {\
+				return setattrib(geo, attribclass, attribname, -1, elemnum, value, 'set');\
+			} else {\
+				return setattrib(geo, attribclass, attribname, elemnum, 0, value, 'set');\
+			}\
+		}\
+
+DEFINEFUNCall(FUNCsetattrib1)
+
+
 #define FUNCattrib0(type)\
 		function\
 		type[] attrib(\

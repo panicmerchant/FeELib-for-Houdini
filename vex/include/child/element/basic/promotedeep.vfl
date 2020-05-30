@@ -23,6 +23,8 @@ int pointprimindex(
 }
 
 
+
+
 //point to prim
 
 function
@@ -30,8 +32,7 @@ int pointprim(
     const int geo;
     const int ptnum;
     ) {
-    return getcomp(pointprims(geo, ptnum), 0);
-    //return pointprims(geo, ptnum)[0];
+    return pointprims(geo, ptnum)[0];
 }
 
 
@@ -103,6 +104,16 @@ int pointprim(
 
 
 
+////////////////////////////////////point to point/////////////////////////////////
+
+function
+int[] pointprimpoints(
+    const int geo;
+    const int ptnum;
+    ) {
+    int pointprim = pointprim(geo, ptnum);
+    return primpoints(geo, pointprim);
+}
 
 
 
@@ -113,8 +124,7 @@ int pointprim(
 
 
 
-
-//vertex to point
+/////////////////////////////////////////vertex to point////////////////////////////////////////////////////
 
 function
 int vertexpoint(
