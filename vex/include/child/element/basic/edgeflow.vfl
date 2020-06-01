@@ -8,7 +8,7 @@
 
 
 
-
+function
 int isboundary(
     const int geo;
     const int hedge;
@@ -19,6 +19,7 @@ int isboundary(
         return 0;
 }
 
+function
 int isinterior(
     const int geo;
     const int hedge;
@@ -29,6 +30,7 @@ int isinterior(
         return 0;
 }
 
+function
 int ismanifold(
     const int geo;
     const int hedge;
@@ -40,6 +42,7 @@ int ismanifold(
 }
 
 
+function
 int isboundary(
     const int geo;
     const int ptnum0, ptnum1;
@@ -47,6 +50,7 @@ int isboundary(
     return isboundary(geo, pointedge(geo, ptnum0, ptnum1));
 }
 
+function
 int isinterior(
     const int geo;
     const int ptnum0, ptnum1;
@@ -54,6 +58,7 @@ int isinterior(
     return isinterior(geo, pointedge(geo, ptnum0, ptnum1));
 }
 
+function
 int ismanifold(
     const int geo;
     const int ptnum0, ptnum1;

@@ -4,66 +4,10 @@
 
 #include <orient.vfl>
 
-
-function
-matrix3 qrotate(
-    const vector4 q;
-    const matrix3 mtx;
-    ) {
-    matrix3 mtx3 = qconvert(q);
-    return mtx3 * mtx;
-}
-
-function
-matrix qrotate(
-    const vector4 q;
-    const matrix mtx;
-    ) {
-    matrix3 mtx3 = qconvert(q);
-    return matrix(mtx3) * mtx;
-}
-/*
-function
-matrix3 qrotate(
-    const vector4 q;
-    const vector pivot;
-    const matrix3 mtx;
-    ) {
-    matrix3 mtx3 = qconvert(q);
-    return mtx3 * mtx;
-}
-
-function
-matrix qrotate(
-    const vector4 q;
-    const vector pivot;
-    const matrix mtx;
-    ) {
-    matrix3 mtx3 = qconvert(q);
-    return matrix(mtx3) * mtx;
-}
-*/
-
-function
-void rotate(
-    export matrix3 mtx;
-    const vector4 q;
-    ) {
-    mtx = qrotate(q, mtx);
-}
-
-function
-void rotate(
-    export matrix mtx;
-    const vector4 q;
-    ) {
-    mtx = qrotate(q, mtx);
-}
-
-
-
-
 #include <mathdeep.vfl>
+
+
+
 
 function
 vector slerp(

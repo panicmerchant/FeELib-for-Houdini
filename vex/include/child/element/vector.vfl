@@ -321,6 +321,15 @@ DEFINEFUNCfv(FUNCnormalizearray)
 
 
 
+function
+vector symmetry(
+    vector vec, axis;
+    ) {
+    float dot = dot(vec, axis);
+    return 2*normalize(axis, dot) - vec;
+}
+
+
 
 
 
