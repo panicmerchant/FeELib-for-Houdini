@@ -367,9 +367,9 @@ int setgroup(
 	} else if ( elemclass == 1 ) {
 		return setpointgroup(geohandle, groupname, elemnum, value, mode);
 	} else if ( elemclass == 2 ) {
-		int hedge_srcpoint = hedge_srcpoint(geo, elemnum);
-		int hedge_dstpoint = hedge_dstpoint(geo, elemnum);
-		return setedgegroup(geo, groupname, hedge_srcpoint, hedge_dstpoint, value, mode);
+		int hedge_srcpoint = hedge_srcpoint(geohandle, elemnum);
+		int hedge_dstpoint = hedge_dstpoint(geohandle, elemnum);
+		return setedgegroup(geohandle, groupname, hedge_srcpoint, hedge_dstpoint, value, mode);
 	} else if ( elemclass == 3 ) {
 		return setvertexgroup(geohandle, groupname, elemnum, value, mode);
 	} else {
@@ -514,9 +514,9 @@ int setgroup(
 		}
 	} else if ( elemclass == 2 ) {
 		foreach (int elemnum; elemnums) {
-			int hedge_srcpoint = hedge_srcpoint(geo, elemnum);
-			int hedge_dstpoint = hedge_dstpoint(geo, elemnum);
-			return setedgegroup(geo, groupname, hedge_srcpoint, hedge_dstpoint, value, mode);
+			int hedge_srcpoint = hedge_srcpoint(geohandle, elemnum);
+			int hedge_dstpoint = hedge_dstpoint(geohandle, elemnum);
+			return setedgegroup(geohandle, groupname, hedge_srcpoint, hedge_dstpoint, value, mode);
 		}
 	} else if ( elemclass == 3 ) {
 		foreach (int elemnum; elemnums) {
@@ -542,9 +542,9 @@ int setgroup(
 	} else if ( elemclass == "pt" || elemclass == "pts" || elemclass == "point" || elemclass == "points" ) {
 		return setgroup(geohandle, 1, groupname, elemnums, value, mode);
 	} else if ( elemclass == "edge" || elemclass == "edges" ) {
-		return setgroup(geohandle, 2, groupname, primnum, elemnums, value, mode);
+		return setgroup(geohandle, 2, groupname, elemnums, value, mode);
 	} else if ( elemclass == "vtx" || elemclass == "vertex" || elemclass == "vertices" ) {
-		return setgroup(geohandle, 3, groupname, primnum, elemnums, value, mode);
+		return setgroup(geohandle, 3, groupname, elemnums, value, mode);
 	} else {
 		return setgroup(geohandle, 4, groupname, elemnums, value, mode);
 	}
