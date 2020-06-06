@@ -6,7 +6,12 @@
 #include <measurebound.vfl>
 
 
-
+/*
+i@polybounding = polybounding(1, @P);
+i@group_on = isongeo(1, @P);
+i@group_out = isoutgeo(1, @P);
+i@group_in = isingeo(1, @P);
+*/
 
 #include <measure.vfl>
 
