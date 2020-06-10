@@ -75,6 +75,7 @@
                     "$FeELib/otls/Filter/Deform/Curve",
                     "$FeELib/otls/Filter/Deform/Morph",
                     "$FeELib/otls/Filter/Deform/NDC",
+                    "$FeELib/otls/Filter/Enumerate",
                     "$FeELib/otls/Filter/Fracture",
                     "$FeELib/otls/Filter/Generator",
                     "$FeELib/otls/Filter/Geo",
@@ -110,7 +111,6 @@
                     "$FeELib/otls/Generator/Copy",
                     "$FeELib/otls/Generator/Curve",
                     "$FeELib/otls/Generator/Curve to Poly",
-                    "$FeELib/otls/Generator/Descending",
                     "$FeELib/otls/Generator/Fractal",
                     "$FeELib/otls/Generator/FX",
                     "$FeELib/otls/Generator/Layout",
@@ -173,6 +173,7 @@
                     "$FeELib/otls/Topo/Sample",
                     "$FeELib/otls/Topo/Standard",
                     "$FeELib/otls/Topo/Stylize",
+                    "$FeELib/otls/Topo/Subdivid",
                 ]
             }
         },
