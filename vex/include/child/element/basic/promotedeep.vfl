@@ -177,7 +177,7 @@ int[] primhedges(
     do{
         push(hnums, hnext);
         hnext = hedge_next(geo, hnext);
-    } while(hnext != hfirst);
+    } while(hnext != hfirst && hnext != -1);
     return hnums;
 }
 
