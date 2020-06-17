@@ -6,6 +6,26 @@
 
 #include <mathdeep.vfl>
 
+#define FUNCdistance(type)\
+        function\
+        type distance(\
+            type val0, val1;\
+            ) {\
+            return abs(val0 -val1);\
+        }\
+
+DEFINEFUNCif(FUNCdistance)
+
+#define FUNCdistance2(type)\
+        function\
+        type distance2(\
+            type val0, val1;\
+            ) {\
+            type diff = val0 - val1;\
+            return diff*diff;\
+        }\
+
+DEFINEFUNCif(FUNCdistance2)
 
 #define FUNCbias(type)\
         function\
@@ -574,6 +594,118 @@ DEFINEFUNCv(FUNCfit0)
 
 DEFINEFUNCv(FUNCfit1)
 
+#define FUNCmode0(type)\
+        function\
+        type mode(\
+            const type arr[];\
+            const int which;\
+            export int times;\
+            const float tolerance;\
+            ) {\
+            if ( tolerance < 0 ) return 0;\
+            int mask[];\
+            int len = len(arr);\
+            resize(mask, len(arr));\
+            for (int i = 0; i < len; ++i) {\
+                if ( mask[i] > 0 ) continue;\
+                mask[i] = 1;\
+                for (int j = i+1; j < len; ++j) {\
+                    if ( mask[j] > 0 || distance(arr[i], arr[j]) > tolerance ) continue;\
+                    mask[j] = 1;\
+                    ++mask[i];\
+                }\
+            }\
+            times = max(mask);\
+            int find[] = find(mask, times);\
+            return arr[find[clamp(which, 0, len(find)-1)]];\
+        }\
+
+DEFINEFUNCifv(FUNCmode0)
+
+#define FUNCmode1(type)\
+        function\
+        type mode(\
+            const type arr[];\
+            export int times;\
+            const float tolerance;\
+            ) {\
+            if ( tolerance < 0 ) return 0;\
+            int mask[];\
+            int len = len(arr);\
+            resize(mask, len(arr));\
+            for (int i = 0; i < len; ++i) {\
+                if ( mask[i] > 0 ) continue;\
+                mask[i] = 1;\
+                for (int j = i+1; j < len; ++j) {\
+                    if ( mask[j] > 0 || distance(arr[i], arr[j]) > tolerance ) continue;\
+                    mask[j] = 1;\
+                    ++mask[i];\
+                }\
+            }\
+            times = max(mask);\
+            return arr[find(mask, times)];\
+        }\
+
+DEFINEFUNCifv(FUNCmode1)
+//you should use this function like this style //mode(arr, times, 0.0);
+
+#define FUNCmode2(type)\
+        function\
+        type mode(\
+            const type arr[];\
+            const float tolerance;\
+            ) {\
+            if ( tolerance < 0 ) return 0;\
+            int mask[];\
+            int len = len(arr);\
+            resize(mask, len(arr));\
+            for (int i = 0; i < len; ++i) {\
+                if ( mask[i] > 0 ) continue;\
+                mask[i] = 1;\
+                for (int j = i+1; j < len; ++j) {\
+                    if ( mask[j] > 0 || distance(arr[i], arr[j]) > tolerance ) continue;\
+                    mask[j] = 1;\
+                    ++mask[i];\
+                }\
+            }\
+            return arr[find(mask, max(mask))];\
+        }\
+
+DEFINEFUNCifv(FUNCmode2)
+//you should use this function like this style //mode(arr, 0.0);
+
+#define FUNCmode01(type)\
+        function\
+        type mode(\
+            const type arr[];\
+            const int which;\
+            export int times;\
+            ) {\
+            return mode(arr, which, times, 0);\
+        }\
+
+DEFINEFUNCifv(FUNCmode01)
+
+#define FUNCmode11(type)\
+        function\
+        type mode(\
+            const type arr[];\
+            export int times;\
+            ) {\
+            return mode(arr, times, 0.0);\
+        }\
+
+DEFINEFUNCifv(FUNCmode11)
+
+#define FUNCmode21(type)\
+        function\
+        type mode(\
+            const type arr[];\
+            ) {\
+            return mode(arr, 0.0);\
+        }\
+
+DEFINEFUNCifv(FUNCmode21)
 
 
 

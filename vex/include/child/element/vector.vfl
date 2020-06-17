@@ -320,7 +320,8 @@ DEFINEFUNCfv(FUNCnormalizearray)
 
 
 
-
+/*
+// equal to reflect()
 function
 vector symmetry(
     vector vec, axis;
@@ -329,7 +330,7 @@ vector symmetry(
     return 2*normalize(axis, dot) - vec;
 }
 
-
+*/
 
 
 
