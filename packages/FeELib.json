@@ -1,5 +1,10 @@
 {
-    "path": "$LibPath/FeELib-for-Houdini", 
+    "path": [
+        {        
+            "value" : "$LibPath/FeELib-for-Houdini",
+            "method" : "prepend",
+        },
+    ],
     "env": [
         {
             "FeELib": "$LibPath/FeELib-for-Houdini",
@@ -8,7 +13,6 @@
             "HOUDINI_OTLSCAN_PATH": {
                 "method": "append", 
                 "value": [
-                    "$FeELib/otls",
                     "$FeELib/otls/examples",
                     "$FeELib/otls/2D",
                     "$FeELib/otls/Advect",
