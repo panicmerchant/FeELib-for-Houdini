@@ -78,6 +78,7 @@ int inedgegroup(
 	string groupname;
 	int hnum;
 	) {
+	//printf('/n%d %d', hedge_srcpoint(geohandle, hnum), hedge_dstpoint(geohandle, hnum));
 	return inedgegroup(geohandle, groupname, hedge_srcpoint(geohandle, hnum), hedge_dstpoint(geohandle, hnum));
 }
 

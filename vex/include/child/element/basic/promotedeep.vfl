@@ -7,6 +7,7 @@
 
 
 
+
 function
 int pointprimindex(
     const int geo;
@@ -20,6 +21,15 @@ int pointprimindex(
     } else {
         return index;
     }
+}
+
+function
+int pointprimindex(
+    const int geo;
+    const int ptnum;
+    ) {
+    int pointprim = pointprims(geo, ptnum)[0];
+    return pointprimindex(geo, pointprim, ptnum);
 }
 
 
