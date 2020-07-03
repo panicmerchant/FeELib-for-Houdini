@@ -60,7 +60,6 @@
                     "$FeELib/otls/Data/Similar",
                     "$FeELib/otls/Data/Space",
                     "$FeELib/otls/Data/Time",
-                    "$FeELib/otls/Data/Topo",
                     "$FeELib/otls/Data/Topology",
                     "$FeELib/otls/Data/Transfer",
                     "$FeELib/otls/Data/Transform",

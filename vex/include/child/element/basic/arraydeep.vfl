@@ -677,15 +677,13 @@ DEFINEFUNCifv(FUNCfuzzyequal)
             if( len(arr0) < len(arr1) ) {\
                 return 0;\
             }\
-            type tmparr0[] = arr0;\
             for(int i = len(arr1)-1; i > -1; --i) {\
-                int findidx = find(tmparr0, arr1[i]);\
+                int findidx = find(arr0, arr1[i]);\
                 if( findidx < 0 ) {\
                     return 0;\
                 }\
-                pop(tmparr0, findidx);\
             }\
-            if( len(arr0) != len(arr1) ) {\
+            if( len(arr0) == len(arr1) ) {\
                 return 1;\
             }\
             return 2;\
@@ -714,28 +712,39 @@ DEFINEFUNCall(FUNCfuzzyincluded)
         int find(\
             const type arr0[], arr1[];\
             ) {\
-            if(len(arr0) >= len(arr1)) {\
-                int flag, numiteration = len(arr0)-len(arr1)+1;\
-                for(int j = 0; j < numiteration; ++j) {\
-                    flag = 1;\
-                    for(int i = 0; i < len(arr1); ++i) {\
-                        if( arr1[i] != arr0[i+j] ) {\
-                            flag = 0;\
-                            break;\
-                        }\
-                    }\
-                    if ( flag ) {\
-                        return j;\
+            int lenarr1 = len(arr1);\
+            if( len(arr0) < lenarr1 ) return -1;\
+            \
+            int flag, numiteration = len(arr0)-lenarr1+1;\
+            for(int j = 0; j < numiteration; ++j) {\
+                flag = 1;\
+                for(int i = 0; i < lenarr1; ++i) {\
+                    if( arr1[i] != arr0[i+j] ) {\
+                        flag = 0;\
+                        break;\
                     }\
                 }\
-                return -1;\
-            } else {\
-                return -1;\
+                if ( flag ) return j;\
             }\
+            return -1;\
         }\
 
 DEFINEFUNCall(FUNCfind)
 
+
+#define FUNCfindtwoway(type)\
+        function\
+        int findtwoway(\
+            const type arr0[], arr1[];\
+            ) {\
+            int find = find(arr0, arr1);\
+            if ( find < 0 ) {\
+                find = find(arr0, reverse(arr1));\
+            }\
+            return find;\
+        }\
+
+DEFINEFUNCall(FUNCfindtwoway)
 
 
 #define FUNCshuffleif(type)\

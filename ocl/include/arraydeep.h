@@ -4,22 +4,10 @@
 #ifndef __ARRAYDEEP_H__
 #define __ARRAYDEEP_H__
 
-//#include "arraydeep.h"
+#include <arraydeep.h>
 
-static 
-int find(
-    int array_length, 
-    global int *array ,
-    int elem 
-    ) {
-    for(int i = 0; i < array_length; ++i) {
-        if ( array[i] == elem ) {
-            return i;
-        }
-    }
-    return -array_length - 1;
-}
 
+/*
 static 
 int find(
     int array_length, 
@@ -83,9 +71,39 @@ int find(
     }
     return - array_end - array_start - 1;
 }
+*/
+
+static 
+int find(
+    int array_length, 
+    global int *array ,
+    int elem 
+    ) {
+    for(int i = 0; i < array_length; ++i) {
+        if ( array[i] == elem ) {
+            return i;
+        }
+    }
+    return -array_length - 1;
+}
+
+static 
+int minidx(
+    int array_len, 
+    private float *array 
+    ) {
+    int min_idx;
+    float minval = 1e10;
+    for (int i = 0; i < array_len; ++i) {
+        if ( array[i] > minval ) continue;
+        minval = array[i];
+        min_idx = i;
+    }
+    return min_idx;
+}
 
 
-
+/*
 
 static 
 void preservevalue(
@@ -98,14 +116,13 @@ void preservevalue(
     ) {
     int len = 0;
     for ( int i = 0; i < arr_length; ++i ) {
-        if ( find(arr0_length, arr0, arr[i]) < 0 ) {
-            outarr[len] == arr[i];
-            len += 1;
-        }
+        if ( find(arr0_length, arr0, arr[i]) > -1 ) continue;
+        outarr[len] = arr[i];
+        len += 1;
     }
 }
 
-
+*/
 
 
 
