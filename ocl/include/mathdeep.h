@@ -5,6 +5,29 @@
 #include <mathdeep.h>
 
 
+
+inline
+float efitf(
+    float val,
+    float src0,
+    float src1,
+    float dest0,
+    float dest1
+    ) {
+    return (val-src0) / (src1-src0) * (dest1-dest0) + dest0;
+}
+
+inline
+float fitf(
+    float val,
+    float src0,
+    float src1,
+    float dest0,
+    float dest1
+    ) {
+    return val <= src0 ? dest0 : (val >= src1 ? dest1 : efitf(val, src0, src1, dest0, dest1));
+}
+
 inline
 float maxf(
     float a,
