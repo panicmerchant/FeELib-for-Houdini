@@ -116,6 +116,7 @@
                     "$FeELib/otls/Generator/Curve to Poly",
                     "$FeELib/otls/Generator/Fractal",
                     "$FeELib/otls/Generator/FX",
+                    "$FeELib/otls/Generator/Graph",
                     "$FeELib/otls/Generator/Layout",
                     "$FeELib/otls/Generator/Outline",
                     "$FeELib/otls/Generator/Point",
