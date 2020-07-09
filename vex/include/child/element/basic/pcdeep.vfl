@@ -112,7 +112,7 @@ int pcimport(
             string channel;\
             ) {\
             type result = 0;\
-            while (pciterate(handle)){\
+            while (pciterate(handle)) {\
                 type value;\
                 pcimport(handle, channel, value);\
                 result += value;\
@@ -129,7 +129,7 @@ int pcfiltercirclefalloff(
     int handle;
     string channel;
     const float radius;
-    const float falloff;
+    const float rolloff;
     ) {
     int value = 0;
     float result = 0;
@@ -139,7 +139,7 @@ int pcfiltercirclefalloff(
         pcimport(handle, "point.distance", dis);
         pcimport(handle, channel, value);
         float fvalue = value;
-        weight = 1 - smooth(0, radius, dis, falloff);
+        weight = 1 - smooth(0, radius, dis, rolloff);
         weightsum += weight;
         result += fvalue * weight;
     }
@@ -152,7 +152,7 @@ int pcfiltercirclefalloff(
             int handle;\
             const string channel;\
             const float radius;\
-            const float falloff;\
+            const float rolloff;\
             ) {\
             type value, result = 0;\
             float weightsum = 0;\
@@ -160,7 +160,7 @@ int pcfiltercirclefalloff(
             while (pciterate(handle)) {\
                 pcimport(handle, "point.distance", dis);\
                 pcimport(handle, channel, value);\
-                weight = 1 - smooth(0, radius, dis, falloff);\
+                weight = 1 - smooth(0, radius, dis, rolloff);\
                 weightsum += weight;\
                 result += value * weight;\
             }\

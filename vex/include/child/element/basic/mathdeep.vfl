@@ -6,6 +6,22 @@
 
 #include <mathdeep.vfl>
 
+
+function
+float normaldistribution(
+    float x, mean, var;
+    ) {
+    return exp(pow(-(x-mean)/var, 2)/2) / var / sqrt(2*PI);
+}
+
+function
+float N(
+    float x, mean, var;
+    ) {
+    return exp(pow(-(x-mean)/var, 2)/2) / var / sqrt(2*PI);
+}
+
+
 #define FUNCdistance(type)\
         function\
         type distance(\
