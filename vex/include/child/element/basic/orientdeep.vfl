@@ -117,7 +117,7 @@ matrix rotate(
 }
 
 
-
+/*
 function
 matrix3 slerp(
     const matrix3 mtx1;
@@ -127,7 +127,7 @@ matrix3 slerp(
     return matrix3(slerp(quaternion(mtx1), quaternion(mtx2), bias));
 }
 
-
+*/
 
 
 
@@ -216,7 +216,7 @@ vector4 slerpdebug(
 }
 */
 
-
+/*
 #define FUNCqrotate(type)\
         function\
         type qrotate(\
@@ -227,7 +227,7 @@ vector4 slerpdebug(
         }\
 
 DEFINEFUNCm3(FUNCqrotate)
-
+*/
 
 
 function
@@ -306,11 +306,24 @@ void rotate(
 
 function
 vector slerp(
-    const vector pos0;
-    const vector pos1;
+    const vector pos0, pos1;
     const float bias;
     ) {
     return qrotate(slerp({0,0,0,1}, dihedral(pos0, pos1), bias), pos0);
+}
+
+
+
+function
+vector projecttoplane(
+    const vector dir, N;
+    ) {
+    #if 1
+        vector nN = normalize(N);
+        return dir - nN * dot(dir, nN);
+    #else
+        return (dir + reflect(dir, N)) / 2;
+    #endif
 }
 
 
