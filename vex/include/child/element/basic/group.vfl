@@ -676,7 +676,8 @@ int ingroup(
 	}
 	return -1;
 }
-
+/*
+////////////////////注释掉这段是为了优化fee lib， 使用int式而非string选择elem class
 function
 int ingroup(
 	int geo;
@@ -720,7 +721,7 @@ int ingroup(
 	return -1;
 }
 
-
+*/
 
 
 function

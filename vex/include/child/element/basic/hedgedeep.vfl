@@ -41,7 +41,7 @@ int[] hedge_equivs(
     const int geo;
     const int hnum;
     ) {
-    //hedge_nextequiv非常慢（测试底面数不卡）
+    //hedge_nextequiv非常慢（测试低面数不卡）
     int hnext = hnum, hedges[];
     do{
         push(hedges, hnext);
