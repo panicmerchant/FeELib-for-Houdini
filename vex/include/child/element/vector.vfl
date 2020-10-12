@@ -319,6 +319,19 @@ DEFINEFUNCfv(FUNClength2sum)
 DEFINEFUNCfv(FUNCnormalizearray)
 
 
+/*
+// equal to -reflect()
+function
+vector mirror(
+    vector vec, axis;
+    ) {
+    vector cross = cross(cross(vec, axis), axis);
+    return reflect(vec, cross);
+}
+
+*/
+
+
 
 /*
 // equal to reflect()
