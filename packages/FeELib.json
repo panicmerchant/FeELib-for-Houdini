@@ -1,17 +1,17 @@
 {
     "path": [
-        {        
-            "value" : "$LibPath/FeELib-for-Houdini",
+        {
+            "value" : "D:\Git\FeELib-for-Houdini",
             "method" : "prepend",
         },
     ],
     "env": [
         {
-            "FeELib": "$LibPath/FeELib-for-Houdini",
+            "FeELib": "D:\Git\FeELib-for-Houdini",
         },
         {
             "HOUDINI_OTLSCAN_PATH": {
-                "method": "append", 
+                "method": "append",
                 "value": [
                     "$FeELib/otls/examples",
                     "$FeELib/otls/2D",
@@ -189,7 +189,7 @@
         },
         {
             "HOUDINI_VEX_PATH": {
-                "method": "append", 
+                "method": "append",
                 "value": [
                     "$FeELib/vex/^",
                     "$FeELib/vex/include",
@@ -202,7 +202,7 @@
         },
         {
             "HOUDINI_OCL_PATH": {
-                "method": "append", 
+                "method": "append",
                 "value": [
                     "$FeELib/ocl",
                 ]
